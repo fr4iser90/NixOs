@@ -1,7 +1,8 @@
+#/etc/nixos/modules/packages/shellAndTerminals.nix
 { pkgs, ...}:
 with pkgs; [
-  fish
-  alacritty
-#  kitty
+  fish               # Friendly interactive shell.
+  alacritty          # GPU-accelerated terminal emulator.
+  # kitty            # Another terminal emulator.
 ]
 
