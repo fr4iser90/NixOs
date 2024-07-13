@@ -1,6 +1,0 @@
-[
-  fish
-  alacritty
-#  kitty
-]
-

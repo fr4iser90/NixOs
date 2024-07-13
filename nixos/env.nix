@@ -5,7 +5,6 @@
   hostName = "fr4iser";
   desktop = "plasma";
   displayManager = "sddm";
-  session = "plasma";
   autoLogin = true;
   timeZone = "Europe/Berlin";
   locales = [ "de_DE.UTF-8" ];

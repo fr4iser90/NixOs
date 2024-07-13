@@ -1,5 +1,0 @@
-[
-  pavucontrol
-#  libxkbcommon
-#  freetype
-]

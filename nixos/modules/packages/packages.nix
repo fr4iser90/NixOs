@@ -1,29 +1,24 @@
 { config, pkgs, ... }:
 
+
 let
-  # Funktion, um Pakete basierend auf dem Setup auszuwählen
-  setupPackages = setup: import ./modules/packages/setups/${setup}.nix { inherit pkgs; };
-  customPackages = import ./modules/packages/customPackages.nix { inherit pkgs; };
-  
-  # Lade die env.nix Datei, um das Setup zu bestimmen
-  env = import ../nixos/env.nix;
+  # Load the env.nix file to determine the setup
+  env = import ../env.nix;
 
-  # Bestimme die Pakete basierend auf dem Setup
-  selectedPackages = setupPackages env.setup;
+  # Function to select packages based on the setup
+  setupPackages = 
+    if env.setup == "gaming" then import ./setups/gaming.nix 
+    else if env.setup == "multimedia" then import ./setups/multimedia.nix 
+    else if env.setup == "server" then import ./setups/server.nix 
+    else if env.setup == "serverRemoteDesktop" then import ./setups/serverRemoteDesktop.nix
+    else if env.setup == "workspace" then import ./setups/workspace.nix 
+    else if env.setup == "custom" then import ./setups/custom.nix 
+    else {}; # Default to an empty set if setup is not recognized
 
-  allPackages = pkgs.lib.concatLists [
-    selectedPackages
-    customPackages
-  ];
+  customPackages = import ./customPackages.nix 
 in
 {
-  environment.systemPackages = allPackages;
-  # Enable Docker virtualisation
-  virtualisation.docker.enable = true;
-
-  programs.steam.enable = true;
-  # Install firefox.
-  programs.firefox.enable = true;
+  environment.systemPackages = setupPackages;
   programs.fish.enable = true;
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
