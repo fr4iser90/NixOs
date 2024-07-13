@@ -2,15 +2,7 @@
 { config, pkgs, ... }:
 
 {
-  services.xserver.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ]; # got problems with nouveau, would give it another try
-  services.xserver.xkb.layout = "de";  # Beispiel für Tastaturlayout
-  services.xserver.xkb.options = "eurosign:e";
-  # Enable Wayland if desired
-  services.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
-  services.displayManager.sddm.wayland.enable = false;
-  services.displayManager.defaultSession = "plasma";
 
   hardware.nvidia = {
     modesetting.enable = true;
@@ -30,17 +22,8 @@
     enable = true;
     extraPackages = with pkgs; [
       config.boot.kernelPackages.nvidiaPackages.production
-      pkgs.libvdpau
-      pkgs.libva
     ];
   };
-
-  # Install necessary X11 packages
-  environment.systemPackages = with pkgs; [
-    glxinfo           # Utility to display information about the OpenGL and GLX implementations.
-    libGL             # OpenGL library.
-    mesa              # Open-source implementation of the OpenGL specification.
-  ];  
 
   # NVIDIA driver options (uncomment to use a different version)
   # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;       # Stable driver

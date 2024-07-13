@@ -11,6 +11,11 @@
     xorg.xsetroot     # Utility to set the root window background.
     xorg.xmodmap      # Utility to edit and manage keyboard key mappings.
     xorg.xset         # Utility to set various user preferences for the X server.
+    glxinfo           # Utility to display information about the OpenGL and GLX implementations.
+    libGL             # OpenGL library.
+    mesa              # Open-source implementation of the OpenGL specification.
+    libvdpau          # Video Decode and Presentation API for Unix.
+    libva             # Video Acceleration API.
     #not essential
   #  xorg.xeyes        # Simple demonstration program for X11.
   #  xorg.xclock       # Simple clock for the X11 environment.

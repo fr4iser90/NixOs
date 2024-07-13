@@ -14,6 +14,10 @@ in {
     ./displayManager.nix
     ./desktopManager.nix
   ];
+  services.xserver.enable = true;
+  
+  services.xserver.xkb.layout = "de";  # Beispiel für Tastaturlayout
+  services.xserver.xkb.options = "eurosign:e";
 }
 
 
