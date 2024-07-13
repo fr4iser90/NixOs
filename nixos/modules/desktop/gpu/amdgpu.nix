@@ -1,3 +1,4 @@
+# /etc/nixos/modules/desktop/gpu/amdgpu.nix
 { config, pkgs, ... }:
 
 {

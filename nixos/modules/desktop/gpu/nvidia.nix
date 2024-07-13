@@ -1,29 +1,22 @@
-# /etc/nixos/modules/desktop/gpu/nvidiaIntelPrime.nix
+# /etc/nixos/modules/desktop/gpu/nvidia.nix
 { config, pkgs, ... }:
 
 {
-  services.xserver.videoDrivers = [ "nvidia" ]; # got problems with nouveau, would give it another try
+  services.xserver.videoDrivers = [ "nvidia" ];  # Use NVIDIA driver
 
   hardware.nvidia = {
-    modesetting.enable = true;
-    nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.production;
-    powerManagement.enable = true;
-    prime = {
-      sync.enable = true;
-      # Multiple uses are available, check the NVIDIA NixOS wiki
-      # Use "lspci | grep -E 'VGA|3D'" to get PCI-bus IDs
-      intelBusId = "PCI:0:2:0";
-      nvidiaBusId = "PCI:1:0:0";
-    };
+    modesetting.enable = true;  # Enable modesetting for NVIDIA
+    nvidiaSettings = true;  # Enable nvidia-settings
+    package = config.boot.kernelPackages.nvidiaPackages.production;  # Use the production driver
   };
 
-  hardware.graphics = {
+  hardware.opengl = {
     enable = true;
     extraPackages = with pkgs; [
       config.boot.kernelPackages.nvidiaPackages.production
     ];
   };
+
 
   # NVIDIA driver options (uncomment to use a different version)
   # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;       # Stable driver

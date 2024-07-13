@@ -1,7 +1,7 @@
+# /etc/nixos/modules/desktop/gpu/intel.nix
 { config, pkgs, ... }:
 
 {
-  services.xserver.enable = true;
   services.xserver.videoDrivers = [ "intel" ]; # Use the Intel driver for integrated graphics
 
   hardware.opengl = {

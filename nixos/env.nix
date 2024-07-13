@@ -16,7 +16,7 @@
   autoLogin = true; # Options: true, false
 
   # Hardware Configuration
-  gpu = "nvidiaIntelPrime"; # Options: "amdgpu", "nvidia", "nvidiaIntelPrime"
+  gpu = "nvidiaIntelPrime"; # Options: "amdgpu", "nvidia", "nvidiaIntelPrime" "intel"
   inputDevices = "libinput"; # Options: "libinput", "evdev", "synaptics"
 
   # Audio Configuration
