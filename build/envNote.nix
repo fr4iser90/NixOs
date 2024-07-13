@@ -1,6 +1,6 @@
-{
+ {
   # Setup Configuration
-  setup = "laptop-gaming"; # Options: "desktop-gaming", "desktop-headless", "laptop-gaming", "tty-server"
+  setup = "gaming"; # Options: "gaming", "multimedia", "server", "serverRemoteDesktop", "workspace", "custom"
 
   # User Configuration
   mainUser = "fr4iser";
@@ -16,7 +16,7 @@
   autoLogin = true; # Options: true, false
 
   # Hardware Configuration
-  gpu = "nvidiaIntelPrime"; # Options: "amdgpu", "nvidia", "nvidiaIntelPrime" "intel"
+  gpu = "amdgpu";
   inputDevices = "libinput"; # Options: "libinput", "evdev", "synaptics"
 
   # Audio Configuration
@@ -43,16 +43,6 @@
 
   # Virtualization Options
   enableVirtualization = true; # Options: true, false | see virtualization-list for more
-  virtualization = {
-    docker = true;       # Docker containerization
-    podman = false;      # Podman containerization
-    kvm = false;         # KVM virtualization
-    qemu = false;        # QEMU virtualization
-    virtualbox = false;  # VirtualBox virtualization
-    lxc = false;         # LXC containers
-    firecracker = false; # Firecracker microVMs
-  };
-
   # Backup Configuration
   backupDestination = "/mnt/backup"; # Backup destination path
 

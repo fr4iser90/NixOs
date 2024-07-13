@@ -1,34 +1,24 @@
 { config, pkgs, ... }:
 
-let
-  browserPackages = import ./modules/packages/browserPackages.nix { inherit pkgs; };
-  commonPackages = import ./modules/packages/commonPackages.nix { inherit pkgs; };
-  developmentPackages = import ./modules/packages/developmentPackages.nix { inherit pkgs; };
-  communicationPackages = import ./modules/packages/communicationPackages.nix { inherit pkgs; };
-  shellsAndTerminals = import ./modules/packages/shellsAndTerminals.nix { inherit pkgs; };
-  gamingPackages = import ./modules/packages/gamingPackages.nix { inherit pkgs; };
-  multimediaPackages = import ./modules/packages/multimediaPackages.nix { inherit pkgs; };
-  systemUtilities = import ./modules/packages/systemUtilities.nix { inherit pkgs; };
 
-  allPackages = pkgs.lib.concatLists [
-    browserPackages
-    commonPackages
-    developmentPackages
-    communicationPackages
-    shellsAndTerminals
-    gamingPackages
-    multimediaPackages
-    systemUtilities
-  ];
+let
+  # Load the env.nix file to determine the setup
+  env = import ../env.nix;
+
+  # Function to select packages based on the setup
+  setupPackages = 
+    if env.setup == "gaming" then import ./setups/gaming.nix 
+    else if env.setup == "multimedia" then import ./setups/multimedia.nix 
+    else if env.setup == "server" then import ./setups/server.nix 
+    else if env.setup == "serverRemoteDesktop" then import ./setups/serverRemoteDesktop.nix
+    else if env.setup == "workspace" then import ./setups/workspace.nix 
+    else if env.setup == "custom" then import ./setups/custom.nix 
+    else {}; # Default to an empty set if setup is not recognized
+
+  customPackages = import ./customPackages.nix 
 in
 {
-  environment.systemPackages = with pkgs; allPackages;
-  # Enable Docker virtualisation
-  virtualisation.docker.enable = true;
-
-  programs.steam.enable = true;
-  # Install firefox.
-  programs.firefox.enable = true;
+  environment.systemPackages = setupPackages;
   programs.fish.enable = true;
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;

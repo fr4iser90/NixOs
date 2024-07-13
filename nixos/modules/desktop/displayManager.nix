@@ -3,12 +3,11 @@
 let
   env = import ../../env.nix;
 
-  # Determine the default session based on the desktop environment and session type
+  # Determine the default session based on the desktop environment
   defaultSession = 
-    if env.desktop == "gnome" then 
-      if env.session == "wayland" then "gnome-wayland" else "gnome" 
-    else if env.desktop == "plasma" then 
-      if env.session == "wayland" then "plasmawayland" else "plasma"
+    if env.desktop == "gnome" then "gnome"
+    else if env.desktop == "plasma" then "plasma"
+>>>>>>> develop
     else if env.desktop == "xfce" then "xfce"
     else if env.desktop == "i3" then "i3"
     else "default";
@@ -17,7 +16,8 @@ in
 {
   services.xserver.displayManager = {
     sddm.enable = env.displayManager == "sddm";
-    sddm.wayland = env.session == "wayland" && env.displayManager == "sddm";
+ #   sddm.wayland = (env.desktop == "plasma" && env.displayManager == "sddm") or false;          not working, needs rework
+>>>>>>> develop
     lightdm.enable = env.displayManager == "lightdm";
     gdm.enable = env.displayManager == "gdm";
     defaultSession = defaultSession;

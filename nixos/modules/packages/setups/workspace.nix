@@ -1,0 +1,69 @@
+#/etc/nixos/modules/packages/setup/gaming.nix
+{ pkgs, ... }:
+with pkgs; [
+    discord
+    lsof
+    git
+    wget
+    tree
+    firefox
+    vlc
+    fish
+    alacritty
+    vscode
+    intellij-idea-community
+    pycharm-community
+    clion
+    qtcreator
+    geany
+    eclipse
+    monodevelop
+    android-studio
+    sublime-text
+    atom
+    kate
+    emacs
+    vim
+    neovim
+    docker
+    kubectl
+    terraform
+    ansible
+    chefdk
+    vagrant
+    heroku-cli
+    awscli
+    azure-cli
+    gdb
+    cmake
+    make
+    bazel
+    maven
+    gradle
+    nodejs
+    npm
+    yarn
+    python3
+    ruby
+    go
+    rustup
+    php
+    perl
+    elixir
+    haskell.compiler.ghc8104
+    racket
+    julia
+    sbcl
+    lua
+    slack
+    zoom-us
+    mattermost-desktop
+    telegram-desktop
+    signal-desktop
+    thunderbird
+    remmina
+]
+  virtualisation.docker.enable = true;
+  programs.steam.enable = true;
+  programs.firefox.enable = true;
+  programs.fish.enable = true;
