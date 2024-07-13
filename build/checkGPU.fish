@@ -67,13 +67,26 @@ set combination_detected false
 if test -n "$nvidia_gpus" -a -n "$intel_gpus"
   echo "Combination: NVIDIA + Intel"
   set combination_detected true
-end
-
-if test -n "$amd_gpus" -a -n "$intel_gpus"
+  set gpu "nvidiaIntelPrime"
+else if test -n "$amd_gpus" -a -n "$intel_gpus"
   echo "Combination: AMD + Intel"
   set combination_detected true
+  set gpu "amdIntelPrime"
+else if test -n "$nvidia_gpus"
+  set gpu "nvidia"
+else if test -n "$amd_gpus"
+  set gpu "amdgpu"
+else if test -n "$intel_gpus"
+  set gpu "intel"
+else
+  echo "No hybrid GPU combination detected."
+  set gpu "unknown"
 end
 
-if not $combination_detected
-  echo "No hybrid GPU combination detected."
+# Update envNote.nix
+if test -f ./envNote.nix
+  sed -i -e "s/gpu = \".*\"/gpu = \"$gpu\";/" ./envNote.nix
+  echo "Updated envNote.nix with detected GPU information."
+else
+  echo "envNote.nix not found."
 end

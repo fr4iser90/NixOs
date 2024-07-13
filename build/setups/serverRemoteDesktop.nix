@@ -1,8 +1,8 @@
 {
-  setup = "gaming";
-  mainUser = "ich";
+  setup = "serverRemoteDesktop";
+  mainUser = "";
   guestUser = "";
-  hostName = "ich";
+  hostName = "";
   desktop = "plasma";
   displayManager = "sddm";
   session = "plasma";
@@ -10,7 +10,7 @@
   timeZone = "Europe/Berlin";
   locales = [ "de_DE.UTF-8" ];
   keyboardLayout = "de";
-  enableSSH = false;
+  enableSSH = true;
   enableRemoteDesktop = false;
   enableSteam = true;
   enableVirtualization = false;

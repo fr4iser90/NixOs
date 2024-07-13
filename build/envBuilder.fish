@@ -1,43 +1,60 @@
 #!/usr/bin/env fish
 
+# Funktion zum sauberen Beenden des Skripts bei Signal
 function on_interrupt --on-signal SIGINT
   echo "Aborting the script."
   exit 0
 end
-# Check if ../nixos/env.nix exists, if not copy defaultEnv.nix to ../nixos/env.nix
+
+# Check if ../nixos/env.nix exists, if not offer predefined setups
 if not test -f ../nixos/env.nix
-  if test -f ./defaultEnv.nix
-    cp ./defaultEnv.nix ../nixos/env.nix
-  else
-    echo "defaultEnv.nix not found and ../nixos/env.nix does not exist."
+  echo "env.nix not found. Offering predefined setups."
+  set -l predefined_setups "gaming" "server" "serverRemoteDesktop" "workspace"
+  set -l selected_setup (printf "%s\n" $predefined_setups | fzf --prompt "Select a predefined setup: " --height 40% --layout=reverse --border)
+
+  if test -z "$selected_setup"
+    echo "No setup selected. Exiting."
     exit 1
   end
-end
 
-# Display current env.nix content
-echo "Current content of ../nixos/env.nix:"
-cat ../nixos/env.nix
+  cp ./setups/$selected_setup/defaultEnv.nix ../nixos/env.nix
+  echo "Using predefined setup: $selected_setup"
+else
+  # Display current env.nix content
+  echo "Current content of ../nixos/env.nix:"
+  cat ../nixos/env.nix
 
-# Prompt to use, edit, delete the current env.nix, or abort
-echo "Do you want to (u)se, (e)dit, (d)elete the current env.nix, or (a)bort? (u/e/d/a):"
-read -l action
+  # Prompt to use, edit, delete the current env.nix, or abort
+  echo "Do you want to (u)se, (e)dit, (d)elete the current env.nix, or (a)bort? (u/e/d/a):"
+  read -l action
 
-switch $action
-  case u
-    echo "Using existing env.nix."
-  case e
-    echo "Editing env.nix. Please make your changes and save the file."
-    $EDITOR ../nixos/env.nix
-  case d
-    echo "Deleting existing env.nix and using defaultEnv.nix."
-    rm ../nixos/env.nix
-    cp ./defaultEnv.nix ../nixos/env.nix
-  case a
-    echo "Aborting the script."
-    exit 0
-  case '*'
-    echo "Invalid option. Exiting."
-    exit 1
+  switch $action
+    case u
+      echo "Using existing env.nix."
+    case e
+      echo "Editing env.nix. Please make your changes and save the file."
+      $EDITOR ../nixos/env.nix
+    case d
+      echo "Deleting existing env.nix and offering predefined setups."
+      rm ../nixos/env.nix
+
+      set -l predefined_setups "gaming" "server" "serverRemoteDesktop" "workspace"
+      set -l selected_setup (printf "%s\n" $predefined_setups | fzf --prompt "Select a predefined setup: " --height 40% --layout=reverse --border)
+
+      if test -z "$selected_setup"
+        echo "No setup selected. Exiting."
+        exit 1
+      end
+
+      cp ./setups/$selected_setup/defaultEnv.nix ../nixos/env.nix
+      echo "Using predefined setup: $selected_setup"
+    case a
+      echo "Aborting the script."
+      exit 0
+    case '*'
+      echo "Invalid option. Exiting."
+      exit 1
+  end
 end
 
 # Load environment variables from env.nix
@@ -90,6 +107,20 @@ if test -z "$keyboardLayout"
   set keyboardLayout "de"
 end
 
+# Funktion zur Abfrage und Auswahl mit fzf
+function prompt_with_fzf
+  set -l prompt_message $argv[1]
+  set -l options $argv[2..-1]
+
+  set -l selected_option (printf "%s\n" $options | fzf --prompt "$prompt_message" --height 40% --layout=reverse --border)
+  if test "$status" -ne 0
+    echo "Aborting the script."
+    exit 0
+  end
+
+  echo $selected_option
+end
+
 # Prompt to change mainUser
 echo "Current mainUser: $mainUser"
 if test "$mainUser" = "unknown"
@@ -120,15 +151,8 @@ if test -n "$newHostName"
   echo "Updated hostName to $hostName in env.nix"
 end
 
-# Check if fzf is installed
-if not type -q fzf
-  echo "fzf is not installed. Please install fzf to use this script."
-  exit 1
-end
-
 # Prompt to change Desktop Environment Configuration
-set -l desktop_options "Keep Current: $desktop" "gnome" "plasma" "xfce"
-set -l selected_desktop (printf "%s\n" $desktop_options | fzf --prompt "Select Desktop Environment (current: $desktop): " --height 40% --layout=reverse --border)
+set selected_desktop (prompt_with_fzf "Select Desktop Environment (current: $desktop): " "Keep Current: $desktop" "gnome" "plasma" "xfce")
 
 if test "$selected_desktop" != "Keep Current: $desktop"
   set desktop $selected_desktop
@@ -137,8 +161,7 @@ if test "$selected_desktop" != "Keep Current: $desktop"
 end
 
 # Prompt to change Display Manager Configuration
-set -l dm_options "Keep Current: $displayManager" "sddm" "lightdm" "gdm"
-set -l selected_dm (printf "%s\n" $dm_options | fzf --prompt "Select Display Manager (current: $displayManager): " --height 40% --layout=reverse --border)
+set selected_dm (prompt_with_fzf "Select Display Manager (current: $displayManager): " "Keep Current: $displayManager" "sddm" "lightdm" "gdm")
 
 if test "$selected_dm" != "Keep Current: $displayManager"
   set displayManager $selected_dm
@@ -147,8 +170,7 @@ if test "$selected_dm" != "Keep Current: $displayManager"
 end
 
 # Prompt to change Session Configuration
-set -l session_options "Keep Current: $session" "plasma" "plasmawayland"
-set -l selected_session (printf "%s\n" $session_options | fzf --prompt "Select Session (current: $session): " --height 40% --layout=reverse --border)
+set selected_session (prompt_with_fzf "Select Session (current: $session): " "Keep Current: $session" "plasma" "plasmawayland")
 
 if test "$selected_session" != "Keep Current: $session"
   set session $selected_session
@@ -157,8 +179,7 @@ if test "$selected_session" != "Keep Current: $session"
 end
 
 # Prompt to change Auto Login Configuration
-set -l autoLogin_options "true" "false"
-set -l selected_autoLogin (printf "%s\n" $autoLogin_options | fzf --prompt "Select Auto Login (current: $autoLogin): " --height 40% --layout=reverse --border)
+set selected_autoLogin (prompt_with_fzf "Select Auto Login (current: $autoLogin): " "true" "false")
 
 if test "$selected_autoLogin" != "$autoLogin"
   set autoLogin $selected_autoLogin
@@ -167,8 +188,7 @@ if test "$selected_autoLogin" != "$autoLogin"
 end
 
 # Prompt to change TimeZone Configuration
-set -l timezone_options "Keep Current: $timeZone" "Europe/Berlin" "America/New_York" "Asia/Tokyo" "Australia/Sydney" "UTC"
-set -l selected_timezone (printf "%s\n" $timezone_options | fzf --prompt "Select TimeZone (current: $timeZone): " --height 40% --layout=reverse --border)
+set selected_timezone (prompt_with_fzf "Select TimeZone (current: $timeZone): " "Keep Current: $timeZone" "Europe/Berlin" "America/New_York" "Asia/Tokyo" "Australia/Sydney" "UTC")
 
 if test "$selected_timezone" != "Keep Current: $timeZone"
   set timeZone $selected_timezone
@@ -177,8 +197,7 @@ if test "$selected_timezone" != "Keep Current: $timeZone"
 end
 
 # Prompt to change Locales Configuration
-set -l locales_options "Keep Current: $locales" "en_US.UTF-8" "de_DE.UTF-8" "fr_FR.UTF-8" "es_ES.UTF-8" "it_IT.UTF-8"
-set -l selected_locales (printf "%s\n" $locales_options | fzf --prompt "Select Locales (current: $locales): " --height 40% --layout=reverse --border)
+set selected_locales (prompt_with_fzf "Select Locales (current: $locales): " "Keep Current: $locales" "en_US.UTF-8" "de_DE.UTF-8" "fr_FR.UTF-8" "es_ES.UTF-8" "it_IT.UTF-8")
 
 if test "$selected_locales" != "Keep Current: $locales"
   set locales $selected_locales
@@ -187,8 +206,7 @@ if test "$selected_locales" != "Keep Current: $locales"
 end
 
 # Prompt to change Keyboard Layout Configuration
-set -l keyboard_layout_options "Keep Current: $keyboardLayout" "us" "uk" "fr" "es" "it" "jp" "ru" "zh" "kr" "br"
-set -l selected_keyboard_layout (printf "%s\n" $keyboard_layout_options | fzf --prompt "Select Keyboard Layout (current: $keyboardLayout): " --height 40% --layout=reverse --border)
+set selected_keyboard_layout (prompt_with_fzf "Select Keyboard Layout (current: $keyboardLayout): " "Keep Current: $keyboardLayout" "us" "uk" "fr" "es" "it" "jp" "ru" "zh" "kr" "br")
 
 if test "$selected_keyboard_layout" != "Keep Current: $keyboardLayout"
   set keyboardLayout $selected_keyboard_layout

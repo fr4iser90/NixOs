@@ -1,28 +1,23 @@
 { config, pkgs, ... }:
 
 let
-  browserPackages = import ./modules/packages/browserPackages.nix { inherit pkgs; };
-  commonPackages = import ./modules/packages/commonPackages.nix { inherit pkgs; };
-  developmentPackages = import ./modules/packages/developmentPackages.nix { inherit pkgs; };
-  communicationPackages = import ./modules/packages/communicationPackages.nix { inherit pkgs; };
-  shellsAndTerminals = import ./modules/packages/shellsAndTerminals.nix { inherit pkgs; };
-  gamingPackages = import ./modules/packages/gamingPackages.nix { inherit pkgs; };
-  multimediaPackages = import ./modules/packages/multimediaPackages.nix { inherit pkgs; };
-  systemUtilities = import ./modules/packages/systemUtilities.nix { inherit pkgs; };
+  # Funktion, um Pakete basierend auf dem Setup auszuwählen
+  setupPackages = setup: import ./modules/packages/setups/${setup}.nix { inherit pkgs; };
+  customPackages = import ./modules/packages/customPackages.nix { inherit pkgs; };
+  
+  # Lade die env.nix Datei, um das Setup zu bestimmen
+  env = import ../nixos/env.nix;
+
+  # Bestimme die Pakete basierend auf dem Setup
+  selectedPackages = setupPackages env.setup;
 
   allPackages = pkgs.lib.concatLists [
-    browserPackages
-    commonPackages
-    developmentPackages
-    communicationPackages
-    shellsAndTerminals
-    gamingPackages
-    multimediaPackages
-    systemUtilities
+    selectedPackages
+    customPackages
   ];
 in
 {
-  environment.systemPackages = with pkgs; allPackages;
+  environment.systemPackages = allPackages;
   # Enable Docker virtualisation
   virtualisation.docker.enable = true;
 
