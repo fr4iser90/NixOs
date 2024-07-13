@@ -37,16 +37,6 @@
 
   # Install necessary X11 packages
   environment.systemPackages = with pkgs; [
-    xorg.xorgserver   # The X.Org server, the foundation for the X11 display system.
-    xorg.xhost        # Utility to control access to the X server.
-    xorg.xinit        # Utility to initialize X11 sessions, commonly used to start X servers.
-    xorg.xauth        # Utility to edit and manage X authentication credentials.
-    xorg.xrdb         # Utility for managing the X server resource database.
-    xorg.xrandr       # Utility to dynamically manage screen resolution and orientation.
-    xorg.xsetroot     # Utility to set the root window background.
-    xorg.xmodmap      # Utility to edit and manage keyboard key mappings.
-    xorg.xset         # Utility to set various user preferences for the X server.
-    plasma-workspace  # KDE Plasma desktop workspace.
     glxinfo           # Utility to display information about the OpenGL and GLX implementations.
     libGL             # OpenGL library.
     mesa              # Open-source implementation of the OpenGL specification.

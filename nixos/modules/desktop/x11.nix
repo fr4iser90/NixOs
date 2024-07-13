@@ -1,35 +1,25 @@
 #/etc/nixos/modules/desktop/x11.nix
 { config, pkgs, ... }:
-
-let
-  env = import ../../env.nix;
-in
 {
   environment.systemPackages = with pkgs; [
-    xorg.xinit
-    xorg.libXtst
-    util-linux
-    xorg.xauth
-    xorg.xf86videodummy
-    xorg.xorgserver
-    xorg.xrandr
-    xorg.xhost
-    sddm
+    xorg.xorgserver   # The X.Org server, the foundation for the X11 display system.
+    xorg.xhost        # Utility to control access to the X server.
+    xorg.xinit        # Utility to initialize X11 sessions, commonly used to start X servers.
+    xorg.xauth        # Utility to edit and manage X authentication credentials.
+    xorg.xrdb         # Utility for managing the X server resource database.
+    xorg.xrandr       # Utility to dynamically manage screen resolution and orientation.
+    xorg.xsetroot     # Utility to set the root window background.
+    xorg.xmodmap      # Utility to edit and manage keyboard key mappings.
+    xorg.xset         # Utility to set various user preferences for the X server.
+    #not essential
+  #  xorg.xeyes        # Simple demonstration program for X11.
+  #  xorg.xclock       # Simple clock for the X11 environment.
+  #  xorg.xkill        # Utility to forcefully close an X11 application.
+  #  xorg.xclipboard   # Utility to manage the X11 clipboard.
+  #  xorg.xprop        # Utility to view and set X11 window properties.
+  #  xorg.xev          # Utility to display X11 events.
+  #  xorg.xdpyinfo     # Utility to display information about the X server.
+  #  xorg.xrefresh     # Utility to refresh the X11 display.
+  #  xorg.xbacklight   # Utility to manage screen backlight settings.
   ];
-
- services.xserver.displayManager.sddm.enable = true;
-
-  services.xserver = {
-    displayManager = {
-      sddm.enable = env.displayManager == "sddm";
-      lightdm.enable = env.displayManager == "lightdm";
-      gdm.enable = env.displayManager == "gdm";
-      defaultSession = if env.desktop == "gnome" then "gnome" else if env.desktop == "plasma" then "plasma" else "xfce";
-    };
-    desktopManager = {
-      plasma5.enable = env.desktop == "plasma";
-      gnome.enable = env.desktop == "gnome";
-      xfce.enable = env.desktop == "xfce";
-    };
-  };
 }
