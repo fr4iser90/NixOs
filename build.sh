@@ -70,4 +70,3 @@ sudo cp -r ./nixos /etc/nixos
 cd /etc/nixos
 # Run nixos-rebuild switch
 sudo nixos-rebuild switch --flake .#$hostName --show-trace
-echo "wehoo"

@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 
 let
+  browserPackages = import ./modules/packages/browserPackages.nix { inherit pkgs; };
   commonPackages = import ./modules/packages/commonPackages.nix { inherit pkgs; };
   developmentPackages = import ./modules/packages/developmentPackages.nix { inherit pkgs; };
   communicationPackages = import ./modules/packages/communicationPackages.nix { inherit pkgs; };
@@ -10,6 +11,7 @@ let
   systemUtilities = import ./modules/packages/systemUtilities.nix { inherit pkgs; };
 
   allPackages = pkgs.lib.concatLists [
+    browserPackages
     commonPackages
     developmentPackages
     communicationPackages
