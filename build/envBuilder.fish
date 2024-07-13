@@ -1,5 +1,9 @@
 #!/usr/bin/env fish
 
+function on_interrupt --on-signal SIGINT
+  echo "Aborting the script."
+  exit 0
+end
 # Check if ../nixos/env.nix exists, if not copy defaultEnv.nix to ../nixos/env.nix
 if not test -f ../nixos/env.nix
   if test -f ./defaultEnv.nix
@@ -14,8 +18,8 @@ end
 echo "Current content of ../nixos/env.nix:"
 cat ../nixos/env.nix
 
-# Prompt to use, edit or delete the current env.nix
-echo "Do you want to (u)se, (e)dit, or (d)elete the current env.nix? (u/e/d):"
+# Prompt to use, edit, delete the current env.nix, or abort
+echo "Do you want to (u)se, (e)dit, (d)elete the current env.nix, or (a)bort? (u/e/d/a):"
 read -l action
 
 switch $action
@@ -28,6 +32,9 @@ switch $action
     echo "Deleting existing env.nix and using defaultEnv.nix."
     rm ../nixos/env.nix
     cp ./defaultEnv.nix ../nixos/env.nix
+  case a
+    echo "Aborting the script."
+    exit 0
   case '*'
     echo "Invalid option. Exiting."
     exit 1

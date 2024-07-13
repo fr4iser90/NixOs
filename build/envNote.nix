@@ -1,6 +1,6 @@
 {
   # Setup Configuration
-  setup = "laptop-gaming"; # Options: "desktop-gaming", "desktop-headless", "laptop-gaming", "tty-server"
+  setup = "gaming"; # Options: "gaming", "workspace", "multimedia", "server", "serverHeadless"
 
   # User Configuration
   mainUser = "";
