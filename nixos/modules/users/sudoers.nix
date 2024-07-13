@@ -8,7 +8,7 @@ in
     enable = true;
     extraRules = [
       {
-        users = [ env.mainUser "fr4iser" ];
+        users = [ env.mainUser ];
         commands = [
           {
             command = "ALL";

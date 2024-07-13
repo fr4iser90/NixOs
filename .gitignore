@@ -1,3 +1,4 @@
 # Ignore secrets folder
 secrets/
 hardware-configuration.nix
+nixos/env.nix
