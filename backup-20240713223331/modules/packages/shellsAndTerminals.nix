@@ -1,0 +1,6 @@
+[
+  fish
+  alacritty
+#  kitty
+]
+

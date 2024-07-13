@@ -83,10 +83,13 @@ else
   set gpu "unknown"
 end
 
-# Update envNote.nix
-if test -f ./envNote.nix
-  sed -i -e "s/gpu = \".*\"/gpu = \"$gpu\";/" ./envNote.nix
-  echo "Updated envNote.nix with detected GPU information."
-else
-  echo "envNote.nix not found."
+
+# Update all .nix files in ./setups/
+for nix_file in ./setups/*.nix
+  if test -f $nix_file
+    sed -i -e "s/gpu = \".*\"/gpu = \"$gpu\"/" $nix_file
+    echo "Updated $nix_file with detected GPU information."
+  else
+    echo "No .nix files found in ./setups/."
+  end
 end

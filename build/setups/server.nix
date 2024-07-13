@@ -17,7 +17,7 @@
   securityHardening = true;
   defaultBrowser = "firefox";
   audio = "pipewire";
-  gpu = "check";
+  gpu = "amdgpu";
   inputDevices = "libinput";
   networkManager = "networkmanager";
   backupDestination = "/mnt/backup";

@@ -1,8 +1,8 @@
 {
-  setup = "gaming";
-  mainUser = "ich";
+  setup = "custom";
+  mainUser = "fr4iser";
   guestUser = "";
-  hostName = "ich";
+  hostName = "fr4iser";
   desktop = "plasma";
   displayManager = "sddm";
   session = "plasma";
@@ -21,7 +21,7 @@
   securityHardening = false;
   defaultBrowser = "firefox";
   audio = "pipewire";
-  gpu = "check";
+  gpu = "intel";
   inputDevices = "libinput";
   networkManager = "networkmanager";
   backupDestination = "/mnt/backup";

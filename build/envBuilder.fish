@@ -9,7 +9,7 @@ end
 # Check if ../nixos/env.nix exists, if not offer predefined setups
 if not test -f ../nixos/env.nix
   echo "env.nix not found. Offering predefined setups."
-  set -l predefined_setups "gaming" "server" "serverRemoteDesktop" "workspace"
+  set -l predefined_setups "gaming" "server" "serverRemoteDesktop" "workspace" "predefinedCustom"
   set -l selected_setup (printf "%s\n" $predefined_setups | fzf --prompt "Select a predefined setup: " --height 40% --layout=reverse --border)
 
   if test -z "$selected_setup"
@@ -17,7 +17,7 @@ if not test -f ../nixos/env.nix
     exit 1
   end
 
-  cp ./setups/$selected_setup/defaultEnv.nix ../nixos/env.nix
+  cp ./setups/$selected_setup.nix ../nixos/env.nix
   echo "Using predefined setup: $selected_setup"
 else
   # Display current env.nix content
@@ -38,7 +38,7 @@ else
       echo "Deleting existing env.nix and offering predefined setups."
       rm ../nixos/env.nix
 
-      set -l predefined_setups "gaming" "server" "serverRemoteDesktop" "workspace"
+      set -l predefined_setups "gaming" "server" "serverRemoteDesktop" "workspace" "predefinedCustom"
       set -l selected_setup (printf "%s\n" $predefined_setups | fzf --prompt "Select a predefined setup: " --height 40% --layout=reverse --border)
 
       if test -z "$selected_setup"
@@ -46,7 +46,7 @@ else
         exit 1
       end
 
-      cp ./setups/$selected_setup/defaultEnv.nix ../nixos/env.nix
+      cp ./setups/$selected_setup.nix ../nixos/env.nix
       echo "Using predefined setup: $selected_setup"
     case a
       echo "Aborting the script."
