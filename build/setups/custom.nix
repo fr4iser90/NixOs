@@ -1,7 +1,7 @@
 {
   setup = "custom";
   mainUser = "fr4iser";
-  guestUser = "";
+  guestUser = "ServerOne";
   hostName = "";
   desktop = "plasma";
   displayManager = "sddm";
@@ -10,7 +10,7 @@
   timeZone = "Europe/Berlin";
   locales = [ "de_DE.UTF-8" ];
   keyboardLayout = "de";
-  enableSSH = false;
+  enableSSH = true;
   enableRemoteDesktop = false;
   enableSteam = true;
   enableVirtualization = false;
