@@ -10,7 +10,6 @@ if ! command -v lspci > /dev/null; then
         printf "Failed to install pciutils. Please install it manually using your package manager.\n" >&2
         exit 1
     fi
-fi
 
 # Check if grep is installed
 if ! command -v grep > /dev/null; then

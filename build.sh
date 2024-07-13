@@ -9,27 +9,27 @@ on_interrupt() {
 # Trap SIGINT signal
 trap 'on_interrupt' SIGINT
 
-# Execute checkGPU.fish
-if [[ -f ./build/checkGPU.fish ]]; then
-    printf "Running checkGPU.fish...\n"
-    if ! source ./build/checkGPU.fish; then
-        printf "Failed to run checkGPU.fish.\n" >&2
+# Execute checkGPU.sh
+if [[ -f ./build/checkGPU.sh ]]; then
+    printf "Running checkGPU.sh...\n"
+    if ! source ./build/checkGPU.sh; then
+        printf "Failed to run checkGPU.sh.\n" >&2
         exit 1
     fi
 else
-    printf "checkGPU.fish not found.\n" >&2
+    printf "checkGPU.sh not found.\n" >&2
     exit 1
 fi
 
-# Execute envBuilder.fish
-if [[ -f ./build/envBuilder.fish ]]; then
-    printf "Running envBuilder.fish...\n"
-    if ! source ./build/envBuilder.fish; then
-        printf "Failed to run envBuilder.fish.\n" >&2
+# Execute envBuilder.sh
+if [[ -f ./build/envBuilder.sh ]]; then
+    printf "Running envBuilder.sh...\n"
+    if ! source ./build/envBuilder.sh; then
+        printf "Failed to run envBuilder.sh.\n" >&2
         exit 1
     fi
 else
-    printf "envBuilder.fish not found.\n" >&2
+    printf "envBuilder.sh not found.\n" >&2
     exit 1
 fi
 

@@ -7,7 +7,6 @@ let
   defaultSession = 
     if env.desktop == "gnome" then "gnome"
     else if env.desktop == "plasma" then "plasma"
->>>>>>> develop
     else if env.desktop == "xfce" then "xfce"
     else if env.desktop == "i3" then "i3"
     else "default";
@@ -17,7 +16,6 @@ in
   services.xserver.displayManager = {
     sddm.enable = env.displayManager == "sddm";
  #   sddm.wayland = (env.desktop == "plasma" && env.displayManager == "sddm") or false;          not working, needs rework
->>>>>>> develop
     lightdm.enable = env.displayManager == "lightdm";
     gdm.enable = env.displayManager == "gdm";
     defaultSession = defaultSession;
