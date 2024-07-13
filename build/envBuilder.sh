@@ -12,7 +12,7 @@ cd build
 # Check if ../nixos/env.nix exists, if not offer predefined setups
 if [[ ! -f ../nixos/env.nix ]]; then
     printf "env.nix not found. Offering predefined setups.\n"
-    predefined_setups=("gaming" "server" "serverRemoteDesktop" "workspace" "predefinedCustom")
+    predefined_setups=("gaming" "server" "serverRemoteDesktop" "workspace" "custom")
     if ! selected_setup=$(printf "%s\n" "${predefined_setups[@]}" | fzf --prompt "Select a predefined setup: " --height 40% --layout=reverse --border); then
         printf "No setup selected. Exiting.\n" >&2
         exit 1

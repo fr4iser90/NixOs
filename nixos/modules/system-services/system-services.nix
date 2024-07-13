@@ -8,8 +8,6 @@ in
   # Enable D-Bus
   services.dbus.enable = true;
   services.udev.packages = [ pkgs.libinput ];
-#  virtualisation.docker.enable = true;
-#  virtualisation.docker.package = pkgs.docker;
 
   # Conditionally import service configurations based on env settings
   imports = lib.flatten [
