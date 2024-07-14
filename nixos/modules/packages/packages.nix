@@ -15,10 +15,10 @@ let
     else if env.setup == "custom" then import ./setups/custom.nix 
     else {}; # Default to an empty set if setup is not recognized
 
-  customPackages = import ./customPackages.nix 
+ # customPackages = import ./customPackages.nix 
 in
 {
-  environment.systemPackages = setupPackages;
+ # environment.systemPackages = setupPackages;
   programs.fish.enable = true;
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
