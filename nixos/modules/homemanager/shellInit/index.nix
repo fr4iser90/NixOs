@@ -1,4 +1,5 @@
-{ pkgs, lib, user, defaultShell, ... }:
+#/etc/nixos/modules/homemanager/shellInit/index.nix
+{ pkgs, lib, defaultShell, ... }:
 
 let
   shellInit = if defaultShell == "bash" then import ./bashInit.nix else

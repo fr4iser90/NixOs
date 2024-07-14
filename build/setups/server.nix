@@ -15,6 +15,15 @@
   enableBluetooth = false;
   enableBackup = true;
   securityHardening = true;
+  defaultShell = "bash";
+  enableBash = true; 
+  enableZsh = true;  
+  enableFish = true;  
+  enableTcsh = false;  
+  enableDash = false;  
+  enableKsh = false;  
+  enableMksh = false;  
+  enableXonsh = false;
   defaultBrowser = "firefox";
   audio = "pipewire";
   gpu = "amdgpu";

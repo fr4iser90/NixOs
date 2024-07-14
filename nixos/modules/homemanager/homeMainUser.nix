@@ -3,19 +3,27 @@
 
 let
   env = import ../../env.nix;
+  #shellInitModule = import ./shellInit/index.nix { inherit pkgs lib; defaultShell = env.defaultShell; };
 in
 {
   home.stateVersion = "24.05";
   home.username = user;
   home.homeDirectory = lib.mkForce "/home/${user}";
+  programs.fish.enable = true;
+  programs.fish.interactiveShellInit = ''
+    function fish_prompt
+      echo -n (prompt_pwd)
+      echo -n ' > '
+    end
+  '';
 
-  import ./shellInit/index.nix;
-
+  #imports = [ shellInitModule ];
 
   home.sessionVariables = {
+    # Add session variables here
   };
 
   home.packages = with pkgs; [
-    # Weitere benutzerspezifische Pakete hier hinzufügen
+    # Add user-specific packages here
   ];
 }

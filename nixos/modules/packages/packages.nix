@@ -16,10 +16,10 @@ let
     else {}; # Default to an empty set if setup is not recognized
 in
 {
-  import [
+  imports = [
     ./customPackages.nix 
     ./modules/shells.nix
-  ]
+  ];
   
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;

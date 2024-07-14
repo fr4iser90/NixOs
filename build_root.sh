@@ -55,30 +55,56 @@ fi
 printf "Copied homeMainUser.nix to home-%s.nix\n" "$mainUser"
 
 # Prompt the user to confirm proceeding with deletion
-printf "Do you really want to proceed with 'sudo rm -rf /etc/nixos'? Enter 'yes' to proceed: "
-read -r confirm
+confirm_deletion() {
+    while true; do
+        printf "Do you really want to proceed with 'sudo rm -rf /etc/nixos'? Enter 'yes' to proceed or 'no' to cancel: "
+        read -r confirm
 
-if [[ "$confirm" != "yes" ]]; then
-    printf "Aborting.\n" >&2
-    exit 1
-fi
+        case "$confirm" in
+            yes)
+                break
+                ;;
+            no)
+                printf "Aborting.\n" >&2
+                exit 1
+                ;;
+            *)
+                printf "Invalid input. Please enter 'yes' to proceed or 'no' to cancel.\n" >&2
+                ;;
+        esac
+    done
+}
 
 # Remove old configuration
-if ! sudo rm -rf /etc/nixos; then
-    printf "Failed to remove /etc/nixos\n" >&2
-    exit 1
-fi
+remove_old_config() {
+    if ! sudo rm -rf /etc/nixos; then
+        printf "Failed to remove /etc/nixos\n" >&2
+        exit 1
+    fi
+}
 
 # Copy new configuration
-if ! sudo cp -r ./nixos /etc/nixos; then
-    printf "Failed to copy new configuration to /etc/nixos\n" >&2
-    exit 1
-fi
-
-cd /etc/nixos || exit
+copy_new_config() {
+    if ! sudo cp -r ./nixos /etc/nixos; then
+        printf "Failed to copy new configuration to /etc/nixos\n" >&2
+        exit 1
+    fi
+}
 
 # Run nixos-rebuild switch
-if ! sudo nixos-rebuild switch --flake .#"$hostName" --show-trace; then
-    printf "nixos-rebuild switch failed\n" >&2
-    exit 1
-fi
+rebuild_nixos() {
+    cd /etc/nixos || exit
+    if ! sudo nixos-rebuild switch --flake .#"$hostName" --show-trace; then
+        printf "nixos-rebuild switch failed\n" >&2
+        exit 1
+    fi
+}
+
+main() {
+    confirm_deletion
+    remove_old_config
+    copy_new_config
+    rebuild_nixos
+}
+
+main "$@"

@@ -1,8 +1,8 @@
 {
   setup = "custom";
   mainUser = "fr4iser";
-  guestUser = "ServerOne";
-  hostName = "";
+  guestUser = "";
+  hostName = "ServerOne";
   desktop = "plasma";
   displayManager = "sddm";
   session = "plasma";
@@ -19,6 +19,15 @@
   enableBluetooth = false;
   enableBackup = false;
   securityHardening = false;
+  defaultShell = "bash";
+  enableBash = true; 
+  enableZsh = true;  
+  enableFish = true;  
+  enableTcsh = false;  
+  enableDash = false;  
+  enableKsh = false;  
+  enableMksh = false;  
+  enableXonsh = false;  
   defaultBrowser = "firefox";
   audio = "pipewire";
   gpu = "intel";

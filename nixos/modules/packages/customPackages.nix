@@ -1,5 +1,12 @@
 #/etc/nixos/modules/packages/communicationPackages.nix
-{ pkgs, ... }:
-with pkgs; [
-    # insert custom packages
-]
+{ config, lib, pkgs, ... }:
+
+{
+  options = {
+    # Define module options here
+  };
+
+  config = {
+    # Define configuration settings here
+  };
+}

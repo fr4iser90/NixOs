@@ -31,7 +31,7 @@
   locales = [ "de_DE.UTF-8" ]; # List of locales "en_US.UTF-8"/"de_DE.UTF-8" etc.
 
   # Shell Configuration
-  defaultShell = "bash" ; Options: "bash", "zsh" "fish" "tcsh" "dash" "ksh" "mksh" "xonsh"
+  defaultShell = "bash"; Options: "bash", "zsh" "fish" "tcsh" "dash" "ksh" "mksh" "xonsh"
   enableBash = true; # Options: true, false
   enableZsh = true; # Options: true, false
   enableFish = true; # Options: true, false

@@ -19,6 +19,14 @@
   enableBluetooth = false;
   enableBackup = false;
   securityHardening = false;
+  enableBash = true;
+  enableZsh = false;
+  enableFish = false;
+  enableTcsh = false;
+  enableDash = false;
+  enableKsh = false;
+  enableMksh = false;
+  enableXonsh = false;
   defaultBrowser = "firefox";
   audio = "pipewire";
   gpu = "nvidiaIntelPrime";
