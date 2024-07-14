@@ -1,6 +1,8 @@
 #/etc/nixos/modules/packages/setup/multimedia.nix
-{ pkgs, ... }:
-with pkgs; [
+{ config, pkgs, ... }:
+
+{
+  environment.systemPackages = with pkgs; [
     lsof               
     git                
     wget              
@@ -35,7 +37,7 @@ with pkgs; [
     kvm
     rsnapshot
     borgbackup              
-]
+];
 
   virtualisation.docker.enable = true;
-  programs.fish.enable = true;
+}

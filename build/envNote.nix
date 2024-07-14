@@ -25,9 +25,22 @@
   # Network Configuration
   networkManager = "networkmanager"; # Options: "networkmanager", "wicd"
 
+
   # System Configuration
   timeZone = "Europe/Berlin"; # Insert timezone
   locales = [ "de_DE.UTF-8" ]; # List of locales "en_US.UTF-8"/"de_DE.UTF-8" etc.
+
+  # Shell Configuration
+  defaultShell = "bash" ; Options: "bash", "zsh" "fish" "tcsh" "dash" "ksh" "mksh" "xonsh"
+  enableBash = true; # Options: true, false
+  enableZsh = true; # Options: true, false
+  enableFish = true; # Options: true, false
+  enableTcsh = false; # Options: true, false
+  enableDash = false; # Options: true, false
+  enableKsh = false; # Options: true, false
+  enableMksh = false; # Options: true, false
+  enableXonsh = false; # Options: true, false
+
 
   # Feature Toggles
   enableSSH = true; # Options: true, false

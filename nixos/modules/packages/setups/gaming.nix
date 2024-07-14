@@ -1,6 +1,8 @@
 #/etc/nixos/modules/packages/setup/gaming.nix
-{ pkgs, ... }:
-with pkgs; [
+{ config, pkgs, ... }:
+
+{
+  environment.systemPackages = with pkgs; [
     lsof               
     git                
     wget              
@@ -16,8 +18,8 @@ with pkgs; [
     wineWowPackages.full
     proton
     discord
-]
+];
 
   programs.steam.enable = true;
   programs.firefox.enable = true;
-  programs.fish.enable = true;
+}

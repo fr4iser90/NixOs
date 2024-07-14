@@ -1,6 +1,8 @@
 #/etc/nixos/modules/packages/setup/multimedia.nix
-{ pkgs, ... }:
-with pkgs; [
+{ config, pkgs, ... }:
+
+{
+  environment.systemPackages = with pkgs; [
     lsof               
     git                
     wget              
@@ -14,7 +16,7 @@ with pkgs; [
     rhythmbox
     clementine
     spotify              
-]
+];
 
   programs.firefox.enable = true;
-  programs.fish.enable = true;
+}

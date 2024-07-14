@@ -1,6 +1,8 @@
 #/etc/nixos/modules/packages/setup/multimedia.nix
-{ pkgs, ... }:
-with pkgs; [
+{ config, pkgs, ... }:
+
+{
+  environment.systemPackages = with pkgs; [
     lsof               
     git                
     wget              
@@ -33,9 +35,9 @@ with pkgs; [
     xrdp
     remmina
     virtualgl              
-]
+];
 
   virtualisation.docker.enable = true;
   programs.steam.enable = true;
   programs.firefox.enable = true;
-  programs.fish.enable = true;
+}

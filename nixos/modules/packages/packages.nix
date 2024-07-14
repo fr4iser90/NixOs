@@ -14,15 +14,15 @@ let
     else if env.setup == "workspace" then import ./setups/workspace.nix 
     else if env.setup == "custom" then import ./setups/custom.nix 
     else {}; # Default to an empty set if setup is not recognized
-
- # customPackages = import ./customPackages.nix 
 in
 {
- # environment.systemPackages = setupPackages;
-  programs.fish.enable = true;
+  import [
+    ./customPackages.nix 
+    ./modules/shells.nix
+  ]
+  
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
   # Enable experimental features for nix
   nix.extraOptions = ''
     experimental-features = nix-command flakes

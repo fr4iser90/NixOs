@@ -1,19 +1,15 @@
 # /etc/nixos/config/home-mainuser.nix
 { pkgs, lib, user, ... }:
 
+let
+  env = import ../../env.nix;
+in
 {
   home.stateVersion = "24.05";
   home.username = user;
   home.homeDirectory = lib.mkForce "/home/${user}";
 
-#  programs.bash.enable = true;    
-  programs.fish.enable = true;
-  programs.fish.interactiveShellInit = ''
-    function fish_prompt
-      echo -n (prompt_pwd)
-      echo -n ' > '
-    end
-  '';
+  import ./shellInit/index.nix;
 
 
   home.sessionVariables = {

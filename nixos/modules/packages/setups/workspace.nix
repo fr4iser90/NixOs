@@ -1,6 +1,8 @@
 #/etc/nixos/modules/packages/setup/gaming.nix
-{ pkgs, ... }:
-with pkgs; [
+{ config, pkgs, ... }:
+
+{
+  environment.systemPackages = with pkgs; [
     discord
     lsof
     git
@@ -62,8 +64,8 @@ with pkgs; [
     signal-desktop
     thunderbird
     remmina
-]
+];
   virtualisation.docker.enable = true;
   programs.steam.enable = true;
   programs.firefox.enable = true;
-  programs.fish.enable = true;
+}
