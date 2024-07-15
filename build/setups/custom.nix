@@ -5,7 +5,7 @@
   hostName = "ServerOne";
   desktop = "plasma";
   displayManager = "sddm";
-  session = "plasma5";
+  session = "plasma";
   autoLogin = true;
   timeZone = "Europe/Berlin";
   locales = [ "de_DE.UTF-8" ];
@@ -19,7 +19,7 @@
   enableBluetooth = false;
   enableBackup = false;
   securityHardening = false;
-  defaultShell = "bash";
+  defaultShell = "fish";
   enableBash = true; 
   enableZsh = true;  
   enableFish = true;  

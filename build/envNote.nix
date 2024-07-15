@@ -12,7 +12,7 @@
   # Desktop Environment Configuration
   desktop = "plasma"; # Options: "gnome", "plasma", "xfce"
   displayManager = "sddm"; # Options: "sddm", "lightdm", "gdm"
-  session = "plasma5"; # Options: "plasma5", "plasmawayland" (for KDE Plasma), not typically needed for GNOME or XFCE
+  session = "plasma"; # Options: "plasma5", "plasmawayland" (for KDE Plasma), not typically needed for GNOME or XFCE
   autoLogin = true; # Options: true, false
 
   # Hardware Configuration

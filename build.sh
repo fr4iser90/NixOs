@@ -33,6 +33,18 @@ else
     exit 1
 fi
 
+# Execute envBuilder.sh
+if [[ -f ./build/hashPassword.sh ]]; then
+    printf "Running hashPassword.sh...\n"
+    if ! source ./build/hashPassword.sh; then
+        printf "Failed to run hashPassword.sh.\n" >&2
+        exit 1
+    fi
+else
+    printf "hashPassword.sh not found.\n" >&2
+    exit 1
+fi
+
 # Re-run the script with sudo for the root part
 printf "Re-running script with sudo for root operations...\n"
 exec sudo bash ./build_root.sh
