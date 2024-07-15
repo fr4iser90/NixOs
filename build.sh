@@ -18,21 +18,33 @@ check_dependencies() {
         exit 0
     fi
 
-    if ! ./install_scripts/install_pciutils.sh; then
-        printf "pciutils installation failed.\n" >&2
-        exit 1
+    if ! command -v lspci > /dev/null; then
+        printf "Installing pciutils...\n"
+        if ! nix-env -iA nixos.pciutils; then
+            printf "pciutils installation failed.\n" >&2
+            exit 1
+        fi
     fi
 
-    if ! ./install_scripts/install_mkpasswd.sh; then
-        printf "mkpasswd installation failed.\n" >&2
-        exit 1
+    if ! command -v mkpasswd > /dev/null; then
+        printf "Installing mkpasswd...\n"
+        if ! nix-env -iA nixos.mkpasswd; then
+            printf "mkpasswd installation failed.\n" >&2
+            exit 1
+        fi
     fi
 
     if ! command -v fzf > /dev/null; then
-        printf "fzf is not installed. Please install fzf manually.\n" >&2
-        exit 1
+        printf "Installing fzf...\n"
+        if ! nix-env -iA nixos.fzf; then
+            printf "fzf installation failed.\n" >&2
+            exit 1
+        fi
     fi
 }
+
+# Check dependencies before proceeding
+check_dependencies
 
 # Execute checkGPU.sh
 if [[ -f ./build/checkGPU.sh ]]; then
