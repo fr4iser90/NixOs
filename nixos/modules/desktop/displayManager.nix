@@ -10,7 +10,6 @@ let
     else if env.desktop == "xfce" then "xfce"
     else if env.desktop == "i3" then "i3"
     else "default";
-
 in
 {
   services.xserver.displayManager = {
