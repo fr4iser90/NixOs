@@ -8,4 +8,5 @@
     xwayland
     plasma-workspace
   ];
+  services.xserver.displayManager.sddm.wayland.enable = true;
 }
