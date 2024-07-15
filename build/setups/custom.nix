@@ -5,7 +5,7 @@
   hostName = "ServerOne";
   desktop = "plasma";
   displayManager = "sddm";
-  session = "plasma";
+  session = "plasma5";
   autoLogin = true;
   timeZone = "Europe/Berlin";
   locales = [ "de_DE.UTF-8" ];

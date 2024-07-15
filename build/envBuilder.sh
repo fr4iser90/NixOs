@@ -8,7 +8,60 @@ on_interrupt() {
 
 # Trap SIGINT signal
 trap 'on_interrupt' SIGINT
+
 cd build
+
+# Function to prompt with fzf
+prompt_with_fzf() {
+    local prompt_message=$1
+    shift
+    local options=("$@")
+    local selected_option
+    if ! selected_option=$(printf "%s\n" "${options[@]}" | fzf --prompt "$prompt_message" --height 40% --layout=reverse --border); then
+        printf "Aborting the script.\n" >&2
+        exit 0
+    fi
+    printf "%s" "$selected_option"
+}
+
+# Function to load current session from env.nix
+load_current_session() {
+    local session_line
+    session_line=$(grep -E '^session\s*=' ../nixos/env.nix)
+    session=${session_line#*= }
+    session=${session//\"/}
+}
+
+# Main function for session configuration
+configure_session() {
+    # Load current session
+    load_current_session
+
+    # If desktop is gnome or xfce, set session accordingly and skip prompt
+    if [[ "$desktop" == "gnome" || "$desktop" == "xfce" ]]; then
+        selected_session="$desktop"
+    else
+        # Prompt user for session type selection
+        selected_type=$(prompt_with_fzf "Select Session Type (current: $session): " "Keep Current: $session" "X11" "Wayland")
+
+        # Determine the actual session based on the selected type
+        if [[ "$selected_type" == "X11" ]]; then
+            selected_session="plasma"
+        elif [[ "$selected_type" == "Wayland" ]]; then
+            selected_session="plasmawayland"
+        else
+            selected_session="$session"
+        fi
+    fi
+
+    # Update the session if it changed
+    if [[ "$selected_session" != "$session" ]]; then
+        session=$selected_session
+        sed -i -e "s/session = \".*\"/session = \"$session\"/" ../nixos/env.nix
+        printf "Updated session to %s in env.nix\n" "$session"
+    fi
+}
+
 # Check if ../nixos/env.nix exists, if not offer predefined setups
 if [[ ! -f ../nixos/env.nix ]]; then
     printf "env.nix not found. Offering predefined setups.\n"
@@ -87,21 +140,6 @@ timeZone=${timeZone:-"Europe/Berlin"}
 locales=${locales:-"de_DE.UTF-8"}
 keyboardLayout=${keyboardLayout:-"de"}
 
-# Function to prompt with fzf
-prompt_with_fzf() {
-    local prompt_message=$1
-    shift
-    local options=("$@")
-
-    local selected_option
-    if ! selected_option=$(printf "%s\n" "${options[@]}" | fzf --prompt "$prompt_message" --height 40% --layout=reverse --border); then
-        printf "Aborting the script.\n" >&2
-        exit 0
-    fi
-
-    printf "%s" "$selected_option"
-}
-
 # Prompt to change mainUser
 printf "Current mainUser: %s\n" "$mainUser"
 if [[ "$mainUser" == "unknown" ]]; then
@@ -150,14 +188,8 @@ if [[ "$selected_dm" != "Keep Current: $displayManager" ]]; then
     printf "Updated displayManager to %s in env.nix\n" "$displayManager"
 fi
 
-# Prompt to change Session Configuration
-selected_session=$(prompt_with_fzf "Select Session (current: $session): " "Keep Current: $session" "plasma" "plasmawayland")
-
-if [[ "$selected_session" != "Keep Current: $session" ]]; then
-    session=$selected_session
-    sed -i -e "s/session = \".*\"/session = \"$session\"/" ../nixos/env.nix
-    printf "Updated session to %s in env.nix\n" "$session"
-fi
+# Configure session based on X11 or Wayland selection
+configure_session
 
 # Prompt to change Auto Login Configuration
 selected_autoLogin=$(prompt_with_fzf "Select Auto Login (current: $autoLogin): " "true" "false")

@@ -5,13 +5,12 @@ let
 
   # Determine the default session based on the desktop environment
   defaultSession = 
-    if env.desktop == "gnome" then "gnome"
-    else if env.desktop == "plasma" then "plasma"
-    else if env.desktop == "xfce" then "xfce"
-    else if env.desktop == "i3" then "i3"
+    if env.session == "gnome" then "gnome"
+    else if env.session == "plasma" then "plasma"
+    else if env.session == "plasmawayland" then "plasmawayland"
+    else if env.session == "xfce" then "xfce"
+    else if env.session == "i3" then "i3"
     else "default";
-
-    sddmWayland = env.desktop == "plasma" && env.displayManager == "sddm";
 in
 {
   services.xserver.displayManager = {

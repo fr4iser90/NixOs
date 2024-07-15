@@ -5,6 +5,7 @@ let
   env = import ../../env.nix;
   gpuConfig = if env.gpu == "nvidia" then import ./gpu/nvidia.nix { inherit config pkgs; }
               else if env.gpu == "nvidiaIntelPrime" then import ./gpu/nvidiaIntelPrime.nix { inherit config pkgs; }
+              else if env.gpu == "intel" then import ./gpu/intel.nix { inherit config pkgs; }
               else import ./gpu/amdgpu.nix { inherit config pkgs; };
 in {
   imports = [ 
