@@ -9,6 +9,31 @@ on_interrupt() {
 # Trap SIGINT signal
 trap 'on_interrupt' SIGINT
 
+# Function to check dependencies
+check_dependencies() {
+    printf "This script requires pciutils (lspci), mkpasswd, and fzf to function correctly.\n"
+    read -p "Do you want to proceed with installing the necessary packages? [y/N]: " response
+    if [[ ! "$response" =~ ^[Yy]$ ]]; then
+        printf "Installation aborted by the user.\n" >&2
+        exit 0
+    fi
+
+    if ! ./install_scripts/install_pciutils.sh; then
+        printf "pciutils installation failed.\n" >&2
+        exit 1
+    fi
+
+    if ! ./install_scripts/install_mkpasswd.sh; then
+        printf "mkpasswd installation failed.\n" >&2
+        exit 1
+    fi
+
+    if ! command -v fzf > /dev/null; then
+        printf "fzf is not installed. Please install fzf manually.\n" >&2
+        exit 1
+    fi
+}
+
 # Execute checkGPU.sh
 if [[ -f ./build/checkGPU.sh ]]; then
     printf "Running checkGPU.sh...\n"
@@ -33,7 +58,7 @@ else
     exit 1
 fi
 
-# Execute envBuilder.sh
+# Execute hashPassword.sh
 if [[ -f ./build/hashPassword.sh ]]; then
     printf "Running hashPassword.sh...\n"
     if ! source ./build/hashPassword.sh; then
