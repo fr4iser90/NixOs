@@ -1,8 +1,8 @@
 {
   setup = "server";
-  mainUser = "";
+  mainUser = "ServerOne";
   guestUser = "";
-  hostName = "";
+  hostName = "ServerOne";
   timeZone = "Europe/Berlin";
   locales = [ "de_DE.UTF-8" ];
   keyboardLayout = "de";

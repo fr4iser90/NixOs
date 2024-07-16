@@ -1,8 +1,8 @@
 {
   setup = "serverRemoteDesktop";
-  mainUser = "";
+  mainUser = "ServerOne";
   guestUser = "";
-  hostName = "";
+  hostName = "ServerOne";
   desktop = "plasma";
   displayManager = "sddm";
   session = "plasma";

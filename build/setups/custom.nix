@@ -1,6 +1,6 @@
 {
   setup = "custom";
-  mainUser = "fr4iser";
+  mainUser = "ServerOne";
   guestUser = "";
   hostName = "ServerOne";
   desktop = "plasma";

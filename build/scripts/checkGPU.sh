@@ -82,7 +82,7 @@ fi
 
 # Update all .nix files in ./setups/
 shopt -s nullglob
-for nix_file in ./setups/*.nix; do
+for nix_file in ../setups/*.nix; do
     if [[ -f "$nix_file" ]]; then
         sed -i -e "s/gpu = \".*\"/gpu = \"$gpu\"/" "$nix_file"
         printf "Updated %s with detected GPU information.\n" "$nix_file"

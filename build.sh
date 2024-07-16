@@ -9,6 +9,9 @@ on_interrupt() {
 # Trap SIGINT signal
 trap 'on_interrupt' SIGINT
 
+# Determine script directory
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
 # Function to check dependencies
 check_dependencies() {
     printf "This script requires pciutils (lspci), mkpasswd, and fzf to function correctly.\n"
@@ -18,70 +21,57 @@ check_dependencies() {
         exit 0
     fi
 
-    if ! command -v lspci > /dev/null; then
-        printf "Installing pciutils...\n"
-        if ! nix-env -iA nixos.pciutils; then
-            printf "pciutils installation failed.\n" >&2
+    install_package() {
+        local package="$1"
+        printf "Installing %s...\n" "$package"
+        if ! nix-env -iA nixos."$package"; then
+            printf "%s installation failed.\n" "$package" >&2
             exit 1
         fi
+    }
+
+    if ! command -v lspci > /dev/null; then
+        install_package pciutils
     fi
 
     if ! command -v mkpasswd > /dev/null; then
-        printf "Installing mkpasswd...\n"
-        if ! nix-env -iA nixos.mkpasswd; then
-            printf "mkpasswd installation failed.\n" >&2
-            exit 1
-        fi
+        install_package mkpasswd
     fi
 
     if ! command -v fzf > /dev/null; then
-        printf "Installing fzf...\n"
-        if ! nix-env -iA nixos.fzf; then
-            printf "fzf installation failed.\n" >&2
-            exit 1
-        fi
+        install_package fzf
     fi
 }
 
 # Check dependencies before proceeding
 check_dependencies
 
-# Execute checkGPU.sh
-if [[ -f ./build/checkGPU.sh ]]; then
-    printf "Running checkGPU.sh...\n"
-    if ! source ./build/checkGPU.sh; then
-        printf "Failed to run checkGPU.sh.\n" >&2
+# Execute scripts using absolute paths based on SCRIPT_DIR
+execute_script() {
+    local script_name="$1"
+    local script_path="${SCRIPT_DIR}/build/scripts/${script_name}"
+
+    if [[ -f "$script_path" ]]; then
+        printf "Running %s...\n" "$script_name"
+        if ! source "$script_path"; then
+            printf "Failed to run %s.\n" "$script_name" >&2
+            exit 1
+        fi
+    else
+        printf "%s not found.\n" "$script_name" >&2
         exit 1
     fi
-else
-    printf "checkGPU.sh not found.\n" >&2
-    exit 1
-fi
+}
+
+# Execute checkGPU.sh
+execute_script "checkGPU.sh"
 
 # Execute envBuilder.sh
-if [[ -f ./build/envBuilder.sh ]]; then
-    printf "Running envBuilder.sh...\n"
-    if ! source ./build/envBuilder.sh; then
-        printf "Failed to run envBuilder.sh.\n" >&2
-        exit 1
-    fi
-else
-    printf "envBuilder.sh not found.\n" >&2
-    exit 1
-fi
+execute_script "envBuilder.sh"
 
 # Execute hashPassword.sh
-if [[ -f ./build/hashPassword.sh ]]; then
-    printf "Running hashPassword.sh...\n"
-    if ! source ./build/hashPassword.sh; then
-        printf "Failed to run hashPassword.sh.\n" >&2
-        exit 1
-    fi
-else
-    printf "hashPassword.sh not found.\n" >&2
-    exit 1
-fi
+execute_script "hashPassword.sh"
 
 # Re-run the script with sudo for the root part
 printf "Re-running script with sudo for root operations...\n"
-exec sudo bash ./build_root.sh
+exec sudo bash "${SCRIPT_DIR}/build/scripts/copyConfiguration.sh"
