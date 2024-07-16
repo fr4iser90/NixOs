@@ -81,7 +81,7 @@ classify_gpus() {
 update_nix_files() {
     local gpu="$1"
     shopt -s nullglob
-    for nix_file in ./setups/*.nix; do
+    for nix_file in ./build/setups/*.nix; do
         if [[ -f "$nix_file" ]]; then
             sed -i -e "s/gpu = \".*\"/gpu = \"$gpu\"/" "$nix_file"
             if [[ $? -eq 0 ]]; then

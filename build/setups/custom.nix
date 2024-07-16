@@ -10,6 +10,7 @@
   timeZone = "Europe/Berlin";
   locales = [ "de_DE.UTF-8" ];
   keyboardLayout = "test";
+  keyboardOptions = "test";
   enableSSH = true;
   enableRemoteDesktop = false;
   enableSteam = true;

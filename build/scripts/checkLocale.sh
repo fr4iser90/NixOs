@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# NEED TIMEZONE!
 # Function to get LANG setting from environment
 get_lang_setting() {
     local lang
@@ -13,6 +12,13 @@ get_xkb_layout() {
     local xkb_layout
     xkb_layout=$(grep -rPo '(?<=services\.xserver\.xkb\.layout = ")[^"]*(?=")' /etc/nixos | cut -d':' -f2)
     printf "%s\n" "$xkb_layout"
+}
+
+# Function to get XKB options from NixOS configuration files
+get_xkb_options() {
+    local xkb_options
+    xkb_options=$(grep -rPo '(?<=services\.xserver\.xkb\.options = ")[^"]*(?=")' /etc/nixos | cut -d':' -f2-)
+    printf "%s\n" "$xkb_options"
 }
 
 # Function to get console keymap from NixOS configuration files
@@ -29,11 +35,8 @@ get_console_keymap() {
 update_nix_files() {
     local lang="$1"
     local xkb_layout="$2"
-    local console_keymap="$3"
-
-    printf "Current working directory: %s\n" "$(pwd)"
-    printf "NixOS setup files found in ./setups/: \n"
-    ls -l ./setups/*.nix
+    local xkb_options="$3"
+    local console_keymap="$4"
 
     for nix_file in ./build/setups/*.nix; do
         if [[ -f "$nix_file" ]]; then
@@ -60,6 +63,15 @@ update_nix_files() {
                     sed -i -e "s/keyboardLayout = .*/keyboardLayout = \"$console_keymap\";/" "$nix_file"
                 fi
             fi
+
+            # Update keyboard options
+            if [[ -n "$xkb_options" ]]; then
+                if grep -q 'keyboardOptions =' "$nix_file"; then
+                    sed -i -e "s/keyboardOptions = \".*\";/keyboardOptions = \"$xkb_options\";/" "$nix_file"
+                else
+                    sed -i -e "s/keyboardOptions = .*/keyboardOptions = \"$xkb_options\";/" "$nix_file"
+                fi
+            fi
         fi
     done
 }
@@ -68,16 +80,18 @@ update_nix_files() {
 main() {
     local lang
     local xkb_layout
+    local xkb_options
     local console_keymap
 
     lang=$(get_lang_setting)
     xkb_layout=$(get_xkb_layout)
+    xkb_options=$(get_xkb_options)
     console_keymap=$(get_console_keymap)
 
-    update_nix_files "$lang" "$xkb_layout" "$console_keymap"
+    update_nix_files "$lang" "$xkb_layout" "$xkb_options" "$console_keymap"
 
     printf "Settings updated in NixOS configuration files.\n"
-    printf "lang: %s\nxkb_layout: %s\nconsole_keymap: %s\n" "$lang" "$xkb_layout" "$console_keymap"
+    printf "lang: %s\nxkb_layout: %s\nxkb_options: %s\nconsole_keymap: %s\n" "$lang" "$xkb_layout" "$xkb_options" "$console_keymap"
 }
 
 main "$@"

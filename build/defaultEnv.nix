@@ -1,36 +1,56 @@
 {
+  # System Setup
   setup = "laptop-gaming";
+  hostName = "";
+  domain = "";
+  timeZone = "Europe/Berlin";
+  locales = [ "de_DE.UTF-8" ];
+
+  # Users
   mainUser = "";
   guestUser = "";
-  hostName = "";
+  autoLogin = true;
+
+  # Desktop Environment
   desktop = "plasma";
   displayManager = "sddm";
   session = "plasma";
-  autoLogin = true;
-  timeZone = "Europe/Berlin";
-  locales = [ "de_DE.UTF-8" ];
   keyboardLayout = "de";
+  keyboardOptions = "eurosign:e";
+
+  # Network
+  networkManager = "networkmanager";
   enableSSH = false;
   enableRemoteDesktop = false;
+
+  # Software
+  defaultBrowser = "firefox";
+  audio = "pipewire";
+  gpu = "nvidiaIntelPrime";
+  inputDevices = "libinput";
+
+  # Optional Features
   enableSteam = false;
   enableVirtualization = false;
   enableFirewall = false;
   enablePrinting = false;
   enableBluetooth = false;
   enableBackup = false;
-  securityHardening = false;
+
+  # Shells
+  defaultShell = "fish";
   enableBash = true;
   enableZsh = false;
-  enableFish = false;
+  enableFish = true;
   enableTcsh = false;
   enableDash = false;
   enableKsh = false;
   enableMksh = false;
   enableXonsh = false;
-  defaultBrowser = "firefox";
-  audio = "pipewire";
-  gpu = "nvidiaIntelPrime";
-  inputDevices = "libinput";
-  networkManager = "networkmanager";
+
+  # Security
+  securityHardening = false;
+
+  # Backup
   backupDestination = "/mnt/backup";
 }

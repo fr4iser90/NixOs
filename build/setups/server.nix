@@ -6,6 +6,7 @@
   timeZone = "Europe/Berlin";
   locales = [ "de_DE.UTF-8" ];
   keyboardLayout = "de";
+  keyboardOptions = "eurosign:e";
   enableSSH = true;
   enableRemoteDesktop = false;
   enableSteam = false;
