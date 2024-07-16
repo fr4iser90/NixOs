@@ -10,46 +10,45 @@ on_interrupt() {
 trap 'on_interrupt' SIGINT
 
 # Determine script directory
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 # Function to check dependencies
 check_dependencies() {
     printf "This script requires pciutils (lspci), mkpasswd, and fzf to function correctly.\n"
-    read -p "Do you want to proceed with installing the necessary packages? [y/N]: " response
-    if [[ ! "$response" =~ ^[Yy]$ ]]; then
-        printf "Installation aborted by the user.\n" >&2
-        exit 0
-    fi
-
-    install_package() {
+    
+    check_and_install() {
         local package="$1"
-        printf "Installing %s...\n" "$package"
-        if ! nix-env -iA nixos."$package"; then
-            printf "%s installation failed.\n" "$package" >&2
-            exit 1
+        local command="$2"
+        
+        if ! command -v "$command" > /dev/null; then
+            printf "%s is not installed.\n" "$package"
+            read -p "Do you want to proceed with installing %s? [y/N]: " "$package" response
+            if [[ "$response" =~ ^[Yy]$ ]]; then
+                printf "Installing %s...\n" "$package"
+                if ! nix-env -iA nixos."$package"; then
+                    printf "%s installation failed.\n" "$package" >&2
+                    exit 1
+                fi
+            else
+                printf "Installation of %s aborted by the user.\n" "$package" >&2
+                exit 0
+            fi
         fi
     }
 
-    if ! command -v lspci > /dev/null; then
-        install_package pciutils
-    fi
-
-    if ! command -v mkpasswd > /dev/null; then
-        install_package mkpasswd
-    fi
-
-    if ! command -v fzf > /dev/null; then
-        install_package fzf
-    fi
+    check_and_install "pciutils" "lspci"
+    check_and_install "mkpasswd" "mkpasswd"
+    check_and_install "fzf" "fzf"
 }
 
 # Check dependencies before proceeding
 check_dependencies
 
-# Execute scripts using absolute paths based on SCRIPT_DIR
+# Execute scripts using absolute paths based on PROJECT_DIR
 execute_script() {
     local script_name="$1"
-    local script_path="${SCRIPT_DIR}/build/scripts/${script_name}"
+    local script_path="${PROJECT_DIR}/build/scripts/${script_name}"
+    local script_dir="${PROJECT_DIR}/build/scripts"
 
     if [[ -f "$script_path" ]]; then
         printf "Running %s...\n" "$script_name"
@@ -74,4 +73,4 @@ execute_script "hashPassword.sh"
 
 # Re-run the script with sudo for the root part
 printf "Re-running script with sudo for root operations...\n"
-exec sudo bash "${SCRIPT_DIR}/build/scripts/copyConfiguration.sh"
+exec sudo bash "${PROJECT_DIR}/build/scripts/copyConfiguration.sh"
