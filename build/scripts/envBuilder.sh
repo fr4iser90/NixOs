@@ -114,9 +114,6 @@ load_env_variables() {
     displayManager=$(printf "%s" "$env_file" | grep -oP '(?<=displayManager = ").*?(?=")')
     session=$(printf "%s" "$env_file" | grep -oP '(?<=session = ").*?(?=")')
     autoLogin=$(printf "%s" "$env_file" | grep -oP '(?<=autoLogin = ).*?(?=;)')
-    timeZone=$(printf "%s" "$env_file" | grep -oP '(?<=timeZone = ").*?(?=")')
-    locales=$(printf "%s" "$env_file" | grep -oP '(?<=locales = \[ ").*?(?=" \])')
-    keyboardLayout=$(printf "%s" "$env_file" | grep -oP '(?<=keyboardLayout = ").*?(?=")')
 }
 
 # Function to initialize variables if they are empty
@@ -127,9 +124,6 @@ initialize_variables() {
     displayManager=${displayManager:-"sddm"}
     session=${session:-"plasmawayland"}
     autoLogin=${autoLogin:-"true"}
-    timeZone=${timeZone:-"Europe/Berlin"}
-    locales=${locales:-"de_DE.UTF-8"}
-    keyboardLayout=${keyboardLayout:-"de"}
 }
 
 # Function to prompt and update variable
@@ -180,9 +174,6 @@ main() {
     prompt_and_update_selection "$displayManager" "Select Display Manager" "sddm" "lightdm" "gdm"
     configure_session
     prompt_and_update_selection "$autoLogin" "Select Auto Login" "true" "false"
-    prompt_and_update_selection "$timeZone" "Select TimeZone" "Europe/Berlin" "America/New_York" "Asia/Tokyo" "Australia/Sydney" "UTC"
-    prompt_and_update_selection "$locales" "Select Locales" "en_US.UTF-8" "de_DE.UTF-8" "fr_FR.UTF-8" "es_ES.UTF-8" "it_IT.UTF-8"
-    prompt_and_update_selection "$keyboardLayout" "Select Keyboard Layout" "us" "uk" "fr" "es" "it" "jp" "ru" "zh" "kr" "br"
 
     cd ..
 }

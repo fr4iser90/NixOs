@@ -65,6 +65,9 @@ execute_script() {
 # Execute checkGPU.sh
 execute_script "checkGPU.sh"
 
+# Execute checkLocale.sh
+execute_script "checkLocale.sh"
+
 # Execute envBuilder.sh
 execute_script "envBuilder.sh"
 

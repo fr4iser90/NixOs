@@ -9,7 +9,7 @@
   autoLogin = true;
   timeZone = "Europe/Berlin";
   locales = [ "de_DE.UTF-8" ];
-  keyboardLayout = "de";
+  keyboardLayout = "test";
   enableSSH = true;
   enableRemoteDesktop = false;
   enableSteam = true;

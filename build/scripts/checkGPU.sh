@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-# Ensure working dir
-#SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
-#cd "$SCRIPT_DIR" || exit 1
-
 # List all PCI devices and filter for GPU-related entries
 get_gpu_info() {
     local gpu_info
