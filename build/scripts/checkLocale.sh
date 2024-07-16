@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# NEED TIMEZONE!
 # Function to get LANG setting from environment
 get_lang_setting() {
     local lang
