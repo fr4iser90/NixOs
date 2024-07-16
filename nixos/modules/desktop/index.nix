@@ -17,8 +17,8 @@ in {
   ];
   
   services.xserver.enable = true;
-  services.xserver.xkb.layout = "de";  # Beispiel für Tastaturlayout
-  services.xserver.xkb.options = "eurosign:e";
+  services.xserver.xkb.layout = "env.keyboardLayout"; 
+  services.xserver.xkb.options = "env.keyboardOptions";
 }
 
 
