@@ -10,7 +10,7 @@
     package = config.boot.kernelPackages.nvidiaPackages.production;  # Use the production driver
   };
 
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
       config.boot.kernelPackages.nvidiaPackages.production

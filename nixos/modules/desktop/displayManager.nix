@@ -22,6 +22,6 @@ in
 
   
   # Enable automatic login if specified in env.nix
-  services.xserver.displayManager.autoLogin.enable = env.autoLogin;
-  services.xserver.displayManager.autoLogin.user = env.mainUser;
+  services.displayManager.autoLogin.enable = env.autoLogin;
+  services.displayManager.autoLogin.user = env.mainUser;
 }

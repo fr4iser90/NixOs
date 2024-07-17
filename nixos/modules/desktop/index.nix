@@ -17,8 +17,8 @@ in {
   ];
   
   services.xserver.enable = true;
-  services.xserver.xkb.layout = "env.keyboardLayout"; 
-  services.xserver.xkb.options = "env.keyboardOptions";
+  services.xserver.xkb.layout = env.keyboardLayout; 
+  services.xserver.xkb.options = env.keyboardOptions;
 }
 
 
