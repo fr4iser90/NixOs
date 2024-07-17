@@ -1,4 +1,6 @@
-NixOS Configurations
+
+# NixOS Configurations
+
 Overview
 
 This project provides a set of preconfigured modules for NixOS, aimed at setting up various environments such as gaming, workspace, server remote desktop, and general server setups. The goal is to simplify and automate the configuration of NixOS systems.
@@ -27,7 +29,7 @@ To install and use these configurations, follow these steps:
 
     sh
 
-git clone https://github.com/fr4iser90/NixOs.git
+git clone <https://github.com/fr4iser90/NixOs.git>
 cd NixOs
 
 Make the main build script executable:
