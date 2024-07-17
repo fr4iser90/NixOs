@@ -14,13 +14,13 @@
   enableSSH = true;
   enableRemoteDesktop = false;
   enableSteam = true;
-  enableVirtualization = false;
+  enableVirtualization = true;
   enableFirewall = false;
   enablePrinting = false;
   enableBluetooth = false;
   enableBackup = false;
   securityHardening = false;
-  defaultShell = "bash";
+  defaultShell = "fish";
   enableBash = true; 
   enableZsh = true;  
   enableFish = true;  
