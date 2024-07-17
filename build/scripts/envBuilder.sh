@@ -61,7 +61,7 @@ configure_session() {
 # Function to handle predefined setups
 handle_predefined_setups() {
     local predefined_setups selected_setup
-    predefined_setups=("gaming" "server" "serverRemoteDesktop" "workspace" "custom")
+    predefined_setups=("custom" "gaming" "workspace" "multimedia" "serverRemoteDesktop" "server" )
     if ! selected_setup=$(printf "%s\n" "${predefined_setups[@]}" | fzf --prompt "Select a predefined setup: " --height 40% --layout=reverse --border); then
         printf "No setup selected. Exiting.\n" >&2
         exit 1
