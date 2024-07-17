@@ -23,28 +23,25 @@ classify_gpus() {
     local amd_intel_prime=()
     local nvidia_intel_prime=()
 
+    local has_nvidia=false
+    local has_amd=false
+    local has_intel=false
+
     # Loop through each line of GPU info
     while IFS= read -r line; do
         printf "Processing line: %s\n" "$line" >&2
 
         case "$line" in
             *NVIDIA*)
-                if [[ "$line" == *"Intel"* ]]; then
-                    nvidia_intel_prime+=("$line")
-                else
-                    nvidia_gpus+=("$line")
-                fi
+                has_nvidia=true
+                nvidia_gpus+=("$line")
                 ;;
             *Intel*)
-                if [[ "$line" == *"NVIDIA"* ]]; then
-                    nvidia_intel_prime+=("$line")
-                elif [[ "$line" == *"AMD"* || "$line" == *"ATI"* ]]; then
-                    amd_intel_prime+=("$line")
-                else
-                    intel_gpus+=("$line")
-                fi
+                has_intel=true
+                intel_gpus+=("$line")
                 ;;
             *AMD*|*ATI*)
+                has_amd=true
                 amd_gpus+=("$line")
                 ;;
             *)
@@ -52,6 +49,14 @@ classify_gpus() {
                 ;;
         esac
     done <<< "$gpu_info"
+
+    if $has_intel && $has_nvidia; then
+        nvidia_intel_prime=("${nvidia_gpus[@]}" "${intel_gpus[@]}")
+    fi
+
+    if $has_intel && $has_amd; then
+        amd_intel_prime=("${amd_gpus[@]}" "${intel_gpus[@]}")
+    fi
 
     # Output the classified GPUs
     printf "Classified AMD GPUs:\n%s\n" "${amd_gpus[*]}" >&2
@@ -62,15 +67,15 @@ classify_gpus() {
 
     # Determine which combination to use for updating .nix files
     if [[ ${#nvidia_intel_prime[@]} -gt 0 ]]; then
-        printf "%s\n" "${nvidia_intel_prime[*]}"
+        printf "%s\n" "nvidiaIntelPrime"
     elif [[ ${#amd_intel_prime[@]} -gt 0 ]]; then
-        printf "%s\n" "${amd_intel_prime[*]}"
+        printf "%s\n" "amdIntelPrime"
     elif [[ ${#nvidia_gpus[@]} -gt 0 ]]; then
-        printf "%s\n" "${nvidia_gpus[*]}"
+        printf "%s\n" "nvidia"
     elif [[ ${#intel_gpus[@]} -gt 0 ]]; then
-        printf "%s\n" "${intel_gpus[*]}"
+        printf "%s\n" "intel"
     elif [[ ${#amd_gpus[@]} -gt 0 ]]; then
-        printf "%s\n" "${amd_gpus[*]}"
+        printf "%s\n" "amdgpu"
     else
         printf "No known GPU types detected.\n" >&2
         exit 1
@@ -109,20 +114,7 @@ main() {
     printf "%s\n" "$classified_gpus"
 
     # Update .nix files based on detected GPUs
-    if [[ "$classified_gpus" == *"NVIDIA-Intel Prime"* ]]; then
-        update_nix_files "nvidiaIntelPrime"
-    elif [[ "$classified_gpus" == *"AMD-Intel Prime"* ]]; then
-        update_nix_files "amdIntelPrime"
-    elif [[ "$classified_gpus" == *"NVIDIA"* ]]; then
-        update_nix_files "nvidia"
-    elif [[ "$classified_gpus" == *"Intel"* ]]; then
-        update_nix_files "intel"
-    elif [[ "$classified_gpus" == *"AMD"* ]]; then
-        update_nix_files "amdgpu"
-    else
-        printf "No known GPU types detected.\n" >&2
-        exit 1
-    fi
+    update_nix_files "$classified_gpus"
 }
 
 main "$@"
