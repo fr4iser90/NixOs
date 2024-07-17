@@ -1,4 +1,4 @@
-
+#/etc/nixos/modules/homemanager/shellInit/fishInit.nix
 {
   programs.fish = {
     enable = true;

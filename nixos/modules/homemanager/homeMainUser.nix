@@ -1,5 +1,5 @@
 # /etc/nixos/config/home-mainuser.nix
-{ pkgs, lib, user, ... }:
+{ pkgs, lib, user, defaultShell, ... }:
 
 let
   env = import ../../env.nix;

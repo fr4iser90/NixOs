@@ -14,19 +14,25 @@ if ! command -v mkpasswd &> /dev/null; then
     nix-env -iA nixpkgs.whois
 fi
 
-# Passwort abfragen
-read -sp "Bitte Passwort eingeben: " password
-echo
+# Passwort abfragen und sicherstellen, dass es nicht leer ist
+while true; do
+    read -sp "Bitte Passwort eingeben: " password
+    echo
+    if [[ -z "$password" ]]; then
+        echo "Passwort darf nicht leer sein. Bitte erneut eingeben."
+        continue
+    fi
 
-# Passwort bestätigen
-read -sp "Bitte Passwort bestätigen: " password_confirm
-echo
+    read -sp "Bitte Passwort bestätigen: " password_confirm
+    echo
 
-# Überprüfen, ob die Passwörter übereinstimmen
-if [[ "$password" != "$password_confirm" ]]; then
-    echo "Passwörter stimmen nicht überein. Abbruch." >&2
-    exit 1
-fi
+    # Überprüfen, ob die Passwörter übereinstimmen
+    if [[ "$password" != "$password_confirm" ]]; then
+        echo "Passwörter stimmen nicht überein. Bitte erneut eingeben."
+    else
+        break
+    fi
+done
 
 # Zielverzeichnis definieren
 OUTPUT_DIR="./nixos/secrets/passwords"

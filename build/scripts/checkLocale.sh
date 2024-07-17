@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# List of possible keyboard layouts and options
+valid_xkb_layouts=("us" "de" "fr" "es" "it" "gb" "jp" "ru")
+default_xkb_layout="de"
+
+valid_xkb_options=("eurosign:e" "compose:ralt" "ctrl:nocaps" "caps:swapescape" "altwin:swap_alt_win" "terminate:ctrl_alt_bksp")
+default_xkb_options="eurosign:e"
+
 # Function to get LANG setting from environment
 get_lang_setting() {
     local lang
@@ -11,13 +18,21 @@ get_lang_setting() {
 get_xkb_layout() {
     local xkb_layout
     xkb_layout=$(grep -rPo '(?<=services\.xserver\.xkb\.layout = ")[^"]*(?=")' /etc/nixos | cut -d':' -f2)
+    
+    if [[ -z "$xkb_layout" || "$xkb_layout" == "env.keyboardLayout" || ! " ${valid_xkb_layouts[@]} " =~ " $xkb_layout " ]]; then
+        xkb_layout="$default_xkb_layout"  # Default value
+    fi
     printf "%s\n" "$xkb_layout"
 }
 
 # Function to get XKB options from NixOS configuration files
 get_xkb_options() {
     local xkb_options
-    xkb_options=$(grep -rPo '(?<=services\.xserver\.xkb\.options = ")[^"]*(?=")' /etc/nixos | cut -d':' -f2-)
+    xkb_options=$(grep -rPo '(?<=services\.xserver\.xkb\.options = ")[^"]*(?=")' /etc/nixos | cut -d':' -f2)
+    
+    if [[ -z "$xkb_options" || "$xkb_options" == "env.keyboardOptions" || ! " ${valid_xkb_options[@]} " =~ " $xkb_options " ]]; then
+        xkb_options="$default_xkb_options"  # Default value
+    fi
     printf "%s\n" "$xkb_options"
 }
 
@@ -25,8 +40,12 @@ get_xkb_options() {
 get_console_keymap() {
     local console_keymap
     console_keymap=$(grep -rPo '(?<=console\.keyMap = ")[^"]*(?=")' /etc/nixos)
+    
     if [[ -z "$console_keymap" && -f /etc/vconsole.conf ]]; then
         console_keymap=$(grep 'KEYMAP' /etc/vconsole.conf | awk -F= '{print $2}')
+    fi
+    if [[ -z "$console_keymap" ]]; then
+        console_keymap="us"
     fi
     printf "%s\n" "$console_keymap"
 }
@@ -62,6 +81,12 @@ update_nix_files() {
                 else
                     sed -i -e "s/keyboardLayout = .*/keyboardLayout = \"$console_keymap\";/" "$nix_file"
                 fi
+            else
+                if grep -q 'keyboardLayout =' "$nix_file"; then
+                    sed -i -e "s/keyboardLayout = \".*\";/keyboardLayout = \"us\";/" "$nix_file"
+                else
+                    sed -i -e "s/keyboardLayout = .*/keyboardLayout = \"us\";/" "$nix_file"
+                fi
             fi
 
             # Update keyboard options
@@ -70,6 +95,12 @@ update_nix_files() {
                     sed -i -e "s/keyboardOptions = \".*\";/keyboardOptions = \"$xkb_options\";/" "$nix_file"
                 else
                     sed -i -e "s/keyboardOptions = .*/keyboardOptions = \"$xkb_options\";/" "$nix_file"
+                fi
+            else
+                if grep -q 'keyboardOptions =' "$nix_file"; then
+                    sed -i -e "s/keyboardOptions = \".*\";/keyboardOptions = \"\";/" "$nix_file"
+                else
+                    sed -i -e "s/keyboardOptions = .*/keyboardOptions = \"\";/" "$nix_file"
                 fi
             fi
         fi
