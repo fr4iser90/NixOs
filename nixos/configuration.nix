@@ -17,7 +17,8 @@ in {
 #      ./modules/system-services/utility/garbagecollector.nix
       ./modules/packages/packages.nix
       ./modules/system-services/system-services.nix
-#      ./modules/system-services/remote/sunshine.nix
     ];
+
+  #console.keyMap = env.keyboardLayout;
   system.stateVersion = "24.05"; 
 }

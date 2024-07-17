@@ -62,6 +62,9 @@ execute_script() {
     fi
 }
 
+# Execute checkUsernameHost.sh
+execute_script "checkUsernameHost.sh"
+
 # Execute checkGPU.sh
 execute_script "checkGPU.sh"
 

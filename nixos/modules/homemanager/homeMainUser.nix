@@ -9,7 +9,7 @@ in
   home.stateVersion = "24.05";
   home.username = user;
   home.homeDirectory = lib.mkForce "/home/${user}";
-  console_keymap = env.keyboardLayout;
+  
 
   imports = [ shellInitModule ];
 
