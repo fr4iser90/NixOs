@@ -11,7 +11,7 @@
   locales = [ "de_DE.UTF-8" ];
   keyboardLayout = "de";
   keyboardOptions = "eurosign:e";
-  enableSSH = false;
+  enableSSH = true;
   enableRemoteDesktop = false;
   enableSteam = true;
   enableVirtualization = false;

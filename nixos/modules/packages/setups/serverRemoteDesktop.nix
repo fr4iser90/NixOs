@@ -11,7 +11,7 @@
     htop
     tmux
     screen
-    net-tools
+    nettools
     nmap
     ncdu
     iperf3
@@ -24,14 +24,11 @@
     curl
     firefox
     vlc
-    xorg
-    xvfb
     weston
     x11vnc
     tigervnc
-    xfce
     alacritty
-    nomachine
+    #nomachine-client
     xrdp
     remmina
     virtualgl              

@@ -12,12 +12,14 @@
     fish
     alacritty            
     lutris
-    heroic-games-launcher
     wine
     winetricks
     wineWowPackages.full
-    proton
     discord
+    bitwarden-cli
+    owncloud-client
+    plex 
+    ffmpeg
 ];
 
   programs.steam.enable = true;

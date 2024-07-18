@@ -13,8 +13,8 @@
     fish
     alacritty
     vscode
-    intellij-idea-community
-    pycharm-community
+    #intellij-idea-community
+    #pycharm-community
     clion
     qtcreator
     geany

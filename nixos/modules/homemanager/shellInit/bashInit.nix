@@ -2,6 +2,10 @@
 { pkgs, lib, ... }:
 
 {
+  home.packages = with pkgs; [
+    bash-completion
+  ];
+
   programs.bash = {
     enable = true;
     initExtra = ''
