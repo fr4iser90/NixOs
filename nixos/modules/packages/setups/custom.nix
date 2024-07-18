@@ -28,7 +28,7 @@ in
     htop               # Interactive process viewer.
     wireguard-tools    # WireGuard command line tools.
     plex               # Plex Media Server.
-    ${defaultBrowser}
+
   ];
   programs.steam.enable = env.enableSteam;
   
