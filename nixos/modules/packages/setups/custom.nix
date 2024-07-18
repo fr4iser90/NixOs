@@ -28,7 +28,7 @@ in
     ethtool            # Utility for examining and tuning network interfaces.
     htop               # Interactive process viewer.
     wireguard-tools    # WireGuard command line tools.
-    plex               # Plex Media Server.
+    jellyfin-media-player           
     brave              # Browser
     owncloud-client    #
   ];
