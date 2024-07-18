@@ -3,7 +3,7 @@
 
 let
   # Load the env.nix file to determine the setup
-  env = import ../env.nix;
+  env = import ../../env.nix;
 
   # Function to select packages based on the setup
   setupPackages = 
@@ -19,6 +19,7 @@ in
   imports = [
     ./customPackages.nix 
     ./modules/shells.nix
+    setupPackages
   ];
   
   # Allow unfree packages

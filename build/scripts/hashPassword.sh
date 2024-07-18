@@ -8,12 +8,6 @@ hash_password() {
     echo "$password" | mkpasswd -m sha-512 -s
 }
 
-# Check if mkpasswd is installed
-if ! command -v mkpasswd &> /dev/null; then
-    echo "Installing mkpasswd..."
-    nix-env -iA nixpkgs.whois
-fi
-
 # Prompt for the password and ensure it's not empty
 while true; do
     read -sp "Please enter a password: " password

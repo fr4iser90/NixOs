@@ -20,7 +20,7 @@
   enableBluetooth = false;
   enableBackup = false;
   securityHardening = false;
-  defaultShell = "bash";
+  defaultShell = "fish";
   enableBash = true; 
   enableZsh = true;  
   enableFish = true;  
@@ -29,7 +29,7 @@
   enableKsh = false;  
   enableMksh = false;  
   enableXonsh = false;  
-  defaultBrowser = "firefox";
+  defaultBrowser = "brave";
   audio = "pipewire";
   gpu = "intel";
   inputDevices = "libinput";

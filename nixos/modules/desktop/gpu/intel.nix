@@ -3,7 +3,7 @@
 
 {
   services.xserver.videoDrivers = [ "intel" ]; # Use the Intel driver for integrated graphics
-  boot.kernelModules = [ "kvm-intel" ];
+#  boot.kernelModules = [ "kvm-intel" ];
   hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [

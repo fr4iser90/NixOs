@@ -14,7 +14,8 @@
   displayManager = "sddm"; # Options: "sddm", "lightdm", "gdm"
   session = "plasma"; # Options: "plasma5", "plasmawayland" (for KDE Plasma), not typically needed for GNOME or XFCE
   autoLogin = true; # Options: true, false
-
+  darkMode = true; # Options: true, false
+  
   # Hardware Configuration
   gpu = "amdgpu";
   inputDevices = "libinput"; # Options: "libinput", "evdev", "synaptics"
