@@ -11,7 +11,7 @@ in
     git                # Version control system.
     wget               # Network downloader.
     tree               # Display directories as trees.
-    bitwarden-desktop  # Desktop application for Bitwarden, a password manager.
+    #bitwarden-desktop  # Desktop application for Bitwarden, a password manager.
     discord            # Voice, video, and text communication application.
     thunderbird        # Email client with support for chat and newsgroups.
     kate               # Advanced text editor.
@@ -28,8 +28,10 @@ in
     htop               # Interactive process viewer.
     wireguard-tools    # WireGuard command line tools.
     plex               # Plex Media Server.
-
+    brave              # Browser
+    owncloud-client    #
   ];
+  services.wg-netmanager.enable = true;
   programs.steam.enable = env.enableSteam;
   
 }

@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+valid_xkb_layouts=("us" "de" "fr" "es" "it" "gb" "jp" "ru")
+default_xkb_layout="de"
+
+valid_xkb_options=("eurosign:e" "compose:ralt" "ctrl:nocaps" "caps:swapescape" "altwin:swap_alt_win" "terminate:ctrl_alt_bksp")
+default_xkb_options="eurosign:e"
+
 # Function to handle script interruption
 on_interrupt() {
     printf "Aborting the script.\n" >&2

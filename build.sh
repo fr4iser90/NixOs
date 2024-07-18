@@ -33,11 +33,7 @@ execute_script() {
 execute_script "checkDependencies.sh"
 
 # Check host for information
-execute_script "checkUsernameHost.sh"
-execute_script "checkLocale.sh"
-
-# Check GPU information
-execute_script "checkGPU.sh"
+execute_script "collectData.sh"
 
 # Execute scripts
 execute_script "envBuilder.sh"

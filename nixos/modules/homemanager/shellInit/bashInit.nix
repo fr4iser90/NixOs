@@ -3,7 +3,7 @@
   programs.bash = {
     enable = true;
     initExtra = ''
-      export PS1="\w > "
+      export PS1="\[\033[01;34m\]\w\[\033[00m\] > "
 
       # Load bash-completion if available
       if [ -f /etc/bash_completion ]; then
@@ -21,6 +21,37 @@
       if [ -f ~/.bash_aliases ]; then
         . ~/.bash_aliases
       fi
+
+      # History configuration
+      export HISTSIZE=10000
+      export HISTFILESIZE=20000
+      shopt -s histappend
+      export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
+
+      # Colorful grep output
+      alias grep='grep --color=auto'
+
+      # Some useful aliases
+      alias ll='ls -lah'
+      alias la='ls -A'
+      alias l='ls -CF'
+
+      # Autojump if installed
+      if command -v autojump >/dev/null 2>&1; then
+        . /usr/share/autojump/autojump.sh
+      fi
+
+      # Git prompt if installed
+      if [ -f /etc/bash_completion.d/git-prompt ]; then
+        . /etc/bash_completion.d/git-prompt
+        export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(__git_ps1 " (%s)") > '
+      fi
+
+      # Direnv if installed
+      if command -v direnv >/dev/null 2>&1; then
+        eval "$(direnv hook bash)"
+      fi
     '';
   };
 }
+

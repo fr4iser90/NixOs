@@ -9,7 +9,7 @@ let
               if defaultShell == "dash" then import ./dashInit.nix else
               if defaultShell == "ksh" then import ./kshInit.nix else
               if defaultShell == "mksh" then import ./mkshInit.nix else
-              if defaultShell == "xonsh" then import ./xonshInit.nix else {};
+              if defaultShell == "xonsh" then import ./xonshInit.nix else import ./bashInit.nix;
 in
 {
   inherit (shellInit) programs;
