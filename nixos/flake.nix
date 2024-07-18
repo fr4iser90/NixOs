@@ -26,7 +26,7 @@
     env = import ./env.nix;
 
     # Define a function to import the home manager user module
-    userModule = user: import ./modules/homemanager/home-${user}.nix { inherit pkgs lib; user = user; defaultShell = env.defaultShell; };
+    userModule = user: import ./modules/homemanager/home-${user}.nix { inherit pkgs lib; user = user; };
 
   in {
     # Define NixOS configurations

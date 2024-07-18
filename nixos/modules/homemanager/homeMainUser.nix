@@ -1,5 +1,5 @@
 # /etc/nixos/config/home-mainuser.nix
-{ pkgs, lib, user, defaultShell, ... }:
+{ pkgs, lib, user, ... }:
 
 let
   env = import ../../env.nix;
@@ -19,6 +19,6 @@ in
   };
 
   home.packages = with pkgs; [
-    # Add user-specific packages here
+    # Add packages here
   ];
 }

@@ -1,15 +1,23 @@
-#/etc/nixos/modules/homemanager/shellInit/bashInit.nix
-{ pkgs, lib, ... }:
+# /etc/nixos/modules/homemanager/shellInit/bashInit.nix
+{ pkgs, ... }:
 
 {
   home.packages = with pkgs; [
+    bash
     bash-completion
+    fzf
+    blesh
   ];
 
   programs.bash = {
     enable = true;
     initExtra = ''
       export PS1="\[\033[01;34m\]\w\[\033[00m\] > "
+
+      # Load ble.sh
+      if [ -f ${pkgs.blesh}/share/blesh/ble.sh ]; then
+        source ${pkgs.blesh}/share/blesh/ble.sh --attach=none
+      fi
 
       # Load bash-completion if available
       if [ -f /etc/bash_completion ]; then
@@ -33,6 +41,11 @@
       export HISTFILESIZE=20000
       shopt -s histappend
       export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
+
+      # Enable bash completion for paths
+      shopt -s direxpand
+      shopt -s dirspell
+      shopt -s cdspell
 
       # Colorful grep output
       alias grep='grep --color=auto'
@@ -60,4 +73,3 @@
     '';
   };
 }
-
