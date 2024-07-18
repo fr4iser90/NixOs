@@ -14,6 +14,7 @@ in {
     ./wayland.nix
     ./displayManager.nix
     ./desktopManager.nix
+    ./darkMode.nix
   ];
   
   services.xserver.enable = true;

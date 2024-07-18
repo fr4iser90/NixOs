@@ -3,14 +3,19 @@
 let
   env = import ../../env.nix;
 
-  # Determine the default session based on the desktop environment
-  defaultSession = 
-    if env.session == "gnome" then "gnome"
-    else if env.session == "plasma" then "plasma"
-    else if env.session == "plasmawayland" then "plasmawayland"
-    else if env.session == "xfce" then "xfce"
-    else if env.session == "i3" then "i3"
-    else "default";
+  # Mapping von Session-Namen auf Standard-Sessions
+  sessionMap = {
+    gnome = "gnome";
+    plasma = "plasma";
+    plasmawayland = "plasmawayland";
+    xfce = "xfce";
+    i3 = "i3";
+  };
+
+  # Standard-Session bestimmen, falls keine passende gefunden wird
+  defaultSession = if builtins.hasAttr env.session sessionMap
+                   then builtins.getAttr env.session sessionMap
+                   else "default";
 in
 {
   services.xserver.displayManager = {

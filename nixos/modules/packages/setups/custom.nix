@@ -12,6 +12,7 @@ in
     wget               # Network downloader.
     tree               # Display directories as trees.
     #bitwarden-desktop  # Desktop application for Bitwarden, a password manager.
+    bitwarden-cli
     discord            # Voice, video, and text communication application.
     thunderbird        # Email client with support for chat and newsgroups.
     kate               # Advanced text editor.

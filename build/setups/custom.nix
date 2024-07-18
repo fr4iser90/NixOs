@@ -11,6 +11,7 @@
   locales = [ "de_DE.UTF-8" ];
   keyboardLayout = "test";
   keyboardOptions = "test";
+  darkMode = true;
   enableSSH = true;
   enableRemoteDesktop = false;
   enableSteam = true;

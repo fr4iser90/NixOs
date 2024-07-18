@@ -17,6 +17,8 @@
   session = "plasma";
   keyboardLayout = "de";
   keyboardOptions = "eurosign:e";
+  darkMode = true; # Options: true, false
+
 
   # Network
   networkManager = "networkmanager";
