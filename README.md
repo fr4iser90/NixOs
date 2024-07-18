@@ -22,34 +22,27 @@ Before running the build script, the script will check and install the necessary
 Installation
 
 To install and use these configurations, follow these steps:
+Clone the repository:
 
-    Clone the repository:
-
-    sh
-
-git clone <https://github.com/fr4iser90/NixOs.git>
-cd NixOs
+    git clone <https://github.com/fr4iser90/NixOs.git>
+    cd NixOs
 
 Make the main build script executable:
 
-sh
 
-chmod +x build.sh
+
+    chmod +x build.sh
 
 Run the build script to install the desired configuration modules:
 
-sh
+
 
     bash ./build.sh
 
 The build.sh script will guide you through a menu where you can select and install the predefined modules you need for your NixOS configuration.
 Usage
-Gaming Setup
+Gaming Setup - File: /etc/nixos/modules/packages/setup/gaming.nix
 
-File: /etc/nixos/modules/packages/setup/gaming.nix
-
-nix
-systemPackages 
     lsof               
     git                
     wget              
@@ -69,11 +62,8 @@ systemPackages
     ffmpeg
 
 
-Multimedia Setup
+Multimedia Setup - File: /etc/nixos/modules/packages/setup/multimedia.nix
 
-File: /etc/nixos/modules/packages/setup/multimedia.nix
-
-systemPackages
     lsof               
     git                
     wget              
@@ -89,11 +79,8 @@ systemPackages
     spotify              
 
 
-General Server Setup
+General Server Setup - File: /etc/nixos/modules/packages/setup/server.nix
 
-File: /etc/nixos/modules/packages/setup/server.nix
-
-systemPackages
     lsof               
     git                
     wget              
@@ -109,11 +96,8 @@ systemPackages
     openssh
     ...           
 
-Server Remote Desktop Setup
+Server Remote Desktop Setup - File: /etc/nixos/modules/packages/setup/serverRemoteDesktop.nix
 
-File: /etc/nixos/modules/packages/setup/serverRemoteDesktop.nix
-
-systemPackages
     lsof               
     git                
     wget              
@@ -140,11 +124,8 @@ systemPackages
     ...            
 
 
-Workspace Setup
+Workspace Setup - File: /etc/nixos/modules/packages/setup/workspace.nix
 
-File: /etc/nixos/modules/packages/setup/workspace.nix
-
-systemPackages
     discord
     lsof
     git
