@@ -1,6 +1,4 @@
-
-# NixOS Configurations
-
+NixOS Configurations
 Overview
 
 This project provides a set of preconfigured modules for NixOS, aimed at setting up various environments such as gaming, workspace, server remote desktop, and general server setups. The goal is to simplify and automate the configuration of NixOS systems.
@@ -46,20 +44,126 @@ sh
 
 The build.sh script will guide you through a menu where you can select and install the predefined modules you need for your NixOS configuration.
 Usage
-
-Here are some examples of how to use the different configuration modules:
 Gaming Setup
 
-...
-Workspace Setup
+File: /etc/nixos/modules/packages/setup/gaming.nix
 
-...
-Server Remote Desktop
+nix
+systemPackages 
+    lsof               
+    git                
+    wget              
+    tree   
+    firefox
+    vlc
+    fish
+    alacritty            
+    lutris
+    wine
+    winetricks
+    wineWowPackages.full
+    discord
+    bitwarden-cli
+    owncloud-client
+    plex 
+    ffmpeg
 
-...
+
+Multimedia Setup
+
+File: /etc/nixos/modules/packages/setup/multimedia.nix
+
+systemPackages
+    lsof               
+    git                
+    wget              
+    tree   
+    firefox
+    vlc
+    fish
+    alacritty            
+    plex
+    kodi
+    rhythmbox
+    clementine
+    spotify              
+
+
 General Server Setup
 
-...
+File: /etc/nixos/modules/packages/setup/server.nix
+
+systemPackages
+    lsof               
+    git                
+    wget              
+    tree   
+    konsole
+    htop
+    tmux
+    screen
+    nmap
+    ncdu
+    iperf3
+    ethtool
+    openssh
+    ...           
+
+Server Remote Desktop Setup
+
+File: /etc/nixos/modules/packages/setup/serverRemoteDesktop.nix
+
+systemPackages
+    lsof               
+    git                
+    wget              
+    tree   
+    konsole
+    htop
+    tmux
+    screen
+    nettools
+    nmap
+    ncdu
+    iperf3
+    ethtool
+    openssh
+    fail2ban
+    iptables
+    tcpdump
+    rsync
+    curl
+    firefox
+    vlc
+    weston
+    x11vnc
+    ...            
+
+
+Workspace Setup
+
+File: /etc/nixos/modules/packages/setup/workspace.nix
+
+systemPackages
+    discord
+    lsof
+    git
+    wget
+    tree
+    firefox
+    vlc
+    fish
+    alacritty
+    vscode
+    clion
+    qtcreator
+    geany
+    eclipse
+    monodevelop
+    android-studio
+    ...
+
+
 License
 
 This project is licensed under the MIT License. See the LICENSE file for details.

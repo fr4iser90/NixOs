@@ -1,4 +1,4 @@
-#/etc/nixos/modules/packages/setup/gaming.nix
+#/etc/nixos/modules/packages/setup/workspace.nix
 { config, pkgs, ... }:
 
 {

@@ -1,4 +1,4 @@
-#/etc/nixos/modules/packages/setup/multimedia.nix
+#/etc/nixos/modules/packages/setup/server.nix
 { config, pkgs, ... }:
 
 {
