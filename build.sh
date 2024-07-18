@@ -35,8 +35,16 @@ execute_script "checkDependencies.sh"
 # Check host for information
 execute_script "collectData.sh"
 
-# Execute scripts
+# Execute envBuilder.sh and decide predefined or personalized setup
 execute_script "envBuilder.sh"
+
+if [[ "$SETUP_TYPE" == "predefined" ]]; then
+    execute_script "predefinedSetup.sh"
+else
+    execute_script "personalizedSetup.sh"
+fi
+
+# Execute hash password script
 execute_script "hashPassword.sh"
 
 # Re-run the script with sudo for the root part

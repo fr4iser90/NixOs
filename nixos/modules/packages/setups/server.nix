@@ -11,7 +11,6 @@
     htop
     tmux
     screen
-    net-tools
     nmap
     ncdu
     iperf3
@@ -34,7 +33,6 @@
     kubernetes
     virt-manager
     qemu
-    kvm
     rsnapshot
     borgbackup              
 ];

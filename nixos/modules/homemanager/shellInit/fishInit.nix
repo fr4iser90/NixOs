@@ -1,4 +1,6 @@
 #/etc/nixos/modules/homemanager/shellInit/fishInit.nix
+{ pkgs, lib, ... }:
+
 {
   programs.fish = {
     enable = true;

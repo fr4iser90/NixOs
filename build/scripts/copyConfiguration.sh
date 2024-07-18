@@ -93,6 +93,7 @@ copy_new_config() {
 
 # Run nixos-rebuild switch
 rebuild_nixos() {
+    rm /nixos/nix.env
     cd /etc/nixos || exit
     if ! sudo nixos-rebuild switch --flake .#"$hostName" --show-trace; then
         printf "nixos-rebuild switch failed\n" >&2

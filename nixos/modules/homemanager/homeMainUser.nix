@@ -3,7 +3,8 @@
 
 let
   env = import ../../env.nix;
-  shellInitModule = import ./shellInit/index.nix { inherit pkgs lib; defaultShell = env.defaultShell; };
+  shellInitFile = ./shellInit/${env.defaultShell} + "Init.nix";
+  shellInitModule = import (builtins.toString shellInitFile) { inherit pkgs lib; };
 in
 {
   home.stateVersion = "24.05";

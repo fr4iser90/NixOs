@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+
+# Function to handle script interruption
+on_interrupt() {
+    printf "Aborting the script.\n" >&2
+    exit 0
+}
+
+# Trap SIGINT signal
+trap 'on_interrupt' SIGINT
+
+# Function to prompt with fzf
+prompt_with_fzf() {
+    local prompt_message options selected_option
+    prompt_message=$1
+    shift
+    options=("$@")
+    if ! selected_option=$(printf "%s\n" "${options[@]}" | fzf --prompt "$prompt_message" --height 40% --layout=reverse --border); then
+        printf "Aborting the script.\n" >&2
+        exit 0
+    fi
+    printf "%s" "$selected_option"
+}
+
+# Function to handle predefined setups
+handle_predefined_setups() {
+    local predefined_setups selected_setup
+    predefined_setups=("custom" "gaming" "workspace" "multimedia" "serverRemoteDesktop" "server" )
+    if ! selected_setup=$(printf "%s\n" "${predefined_setups[@]}" | fzf --prompt "Select a predefined setup: " --height 40% --layout=reverse --border); then
+        printf "No setup selected. Exiting.\n" >&2
+        exit 1
+    fi
+    cp "./build/setups/$selected_setup.nix" "./nixos/env.nix"
+    printf "Using predefined setup: %s\n" "$selected_setup"
+    # Only load environment variables and skip the builder process if a predefined setup is selected
+    load_env_variables
+    printf "Predefined setup selected. Loaded environment variables and skipping builder.\n"
+}
+
+# Function to load environment variables from env.nix
+load_env_variables() {
+    local env_file
+    printf "Loading environment variables from env.nix...\n"
+    if ! env_file=$(nix-instantiate --eval --strict ./nixos/env.nix); then
+        printf "Failed to evaluate env.nix\n" >&2
+        exit 1
+    fi
+    mainUser=$(printf "%s" "$env_file" | grep -oP '(?<=mainUser = ").*?(?=")')
+    hostName=$(printf "%s" "$env_file" | grep -oP '(?<=hostName = ").*?(?=")')
+    desktop=$(printf "%s" "$env_file" | grep -oP '(?<=desktop = ").*?(?=")')
+    displayManager=$(printf "%s" "$env_file" | grep -oP '(?<=displayManager = ").*?(?=")')
+    session=$(printf "%s" "$env_file" | grep -oP '(?<=session = ").*?(?=")')
+    autoLogin=$(printf "%s" "$env_file" | grep -oP '(?<=autoLogin = ).*?(?=;)')
+    printf "Loaded variables: mainUser=%s, hostName=%s, desktop=%s, displayManager=%s, session=%s, autoLogin=%s\n" "$mainUser" "$hostName" "$desktop" "$displayManager" "$session" "$autoLogin"
+}
+
+main() {
+    handle_predefined_setups
+    load_env_variables
+}
+
+main "$@"

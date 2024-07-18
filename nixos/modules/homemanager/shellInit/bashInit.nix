@@ -1,4 +1,6 @@
 #/etc/nixos/modules/homemanager/shellInit/bashInit.nix
+{ pkgs, lib, ... }:
+
 {
   programs.bash = {
     enable = true;
