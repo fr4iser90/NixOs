@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   env = import ../../../env.nix;
@@ -12,4 +12,18 @@ in
 #  programs.ksh.enable = env.enableKsh;
 #  programs.mksh.enable = env.enableMksh;
 #  programs.xonsh.enable = env.enableXonsh;
+
+
+  environment.systemPackages = with pkgs; [
+    zsh
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    zsh-autocomplete
+    zsh-you-should-use
+    zsh-navigation-tools
+    zsh-system-clipboard
+    nix-zsh-completions
+    oh-my-zsh
+    autojump
+  ];
 }

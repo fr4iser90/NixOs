@@ -15,12 +15,14 @@
     autojump
   ];
   
+  programs.zsh.syntaxHighlighting.highlighters = true;
+  programs.zsh.enableCompletion = true;
   programs.zsh = {
     enable = true;
     oh-my-zsh = {
       enable = true;
       extraConfig = ''
-        export ZSH="${pkgs.oh-my-zsh}/share/oh-my-zsh"
+        #export ZSH="${pkgs.oh-my-zsh}/share/oh-my-zsh"
 
         # Set name of the theme to load.
         ZSH_THEME="agnoster"
@@ -30,16 +32,7 @@
 
         # Which plugins would you like to load?
         plugins=(
-          git
-          ${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions
-          ${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting
-          ${pkgs.zsh-autocomplete}/share/zsh-autocomplete
-          ${pkgs.zsh-you-should-use}/share/zsh-you-should-use
-          ${pkgs.zsh-navigation-tools}/share/zsh-navigation-tools
-          ${pkgs.zsh-system-clipboard}/share/zsh-system-clipboard
-          ${pkgs.nix-zsh-completions}/share/nix-zsh-completions
         )
-
 
         source $ZSH/oh-my-zsh.sh
 
