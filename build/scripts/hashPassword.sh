@@ -2,54 +2,55 @@
 
 set -e
 
-# Funktion zum Hashen des Passworts
+# Function to hash the password
 hash_password() {
     local password="$1"
     echo "$password" | mkpasswd -m sha-512 -s
 }
 
-# Überprüfen, ob mkpasswd installiert ist
+# Check if mkpasswd is installed
 if ! command -v mkpasswd &> /dev/null; then
-    echo "mkpasswd wird installiert..."
+    echo "Installing mkpasswd..."
     nix-env -iA nixpkgs.whois
 fi
 
-# Passwort abfragen und sicherstellen, dass es nicht leer ist
+# Prompt for the password and ensure it's not empty
 while true; do
-    read -sp "Bitte Passwort eingeben: " password
+    read -sp "Please enter a password: " password
     echo
     if [[ -z "$password" ]]; then
-        echo "Passwort darf nicht leer sein. Bitte erneut eingeben."
+        echo "Password cannot be empty. Please try again."
         continue
     fi
 
-    read -sp "Bitte Passwort bestätigen: " password_confirm
+    read -sp "Please confirm the password: " password_confirm
     echo
 
-    # Überprüfen, ob die Passwörter übereinstimmen
+    # Verify that the passwords match
     if [[ "$password" != "$password_confirm" ]]; then
-        echo "Passwörter stimmen nicht überein. Bitte erneut eingeben."
+        echo "Passwords do not match. Please try again."
     else
         break
     fi
 done
 
-# Zielverzeichnis definieren
+# Define the target directory
 OUTPUT_DIR="./nixos/secrets/passwords"
 OUTPUT_FILE="$OUTPUT_DIR/.hashedLoginPassword"
 
-# Lösche die bestehende Passwortdatei, falls sie existiert
+# Delete the existing password file if it exists
 if [[ -f "$OUTPUT_FILE" ]]; then
     rm "$OUTPUT_FILE"
 fi
 
-# Verzeichnis erstellen, falls es nicht existiert
+# Create the directory if it does not exist
 mkdir -p "$OUTPUT_DIR"
 
-# Passwort hashen
+# Hash the password
 hashed_password=$(hash_password "$password")
 
-# Gehashtes Passwort in Datei speichern
+# Save the hashed password to the file
 printf "%s\n" "$hashed_password" > "$OUTPUT_FILE"
 
-printf "Das Passwort wurde erfolgreich gehasht und in %s gespeichert.\n" "$OUTPUT_FILE"
+printf "The password has been successfully hashed and saved to %s.\n" "$OUTPUT_FILE"
+echo "The hashed password is stored in $OUTPUT_FILE and can be used for new users to set up their login credentials."
