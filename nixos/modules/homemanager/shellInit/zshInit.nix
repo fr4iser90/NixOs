@@ -14,13 +14,19 @@
     oh-my-zsh
     autojump
   ];
+
   
-  programs.zsh.syntaxHighlighting.highlighters = true;
-  programs.zsh.enableCompletion = true;
   programs.zsh = {
     enable = true;
+    syntaxHighlighting.highlighters = true;
+    enableCompletion = true;
+    enableAutosuggestions = true;
     oh-my-zsh = {
       enable = true;
+      package = pkgs.oh-my-zsh;
+      plugins = [
+        "git"
+      ];
       extraConfig = ''
         #export ZSH="${pkgs.oh-my-zsh}/share/oh-my-zsh"
 
@@ -47,6 +53,7 @@
         alias ll='ls -lah'
         alias la='ls -A'
         alias l='ls -CF'
+        alias buildNix='bash ~/Documents/nixos/build.sh'
 
         # Enable autojump
         if [ -f /usr/share/autojump/autojump.zsh ]; then

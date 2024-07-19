@@ -9,8 +9,11 @@ on_interrupt() {
 # Trap SIGINT signal
 trap 'on_interrupt' SIGINT
 
-# Determine script directory
-PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+# Determine the directory of the current script (the directory where this script is located)
+PROJECT_DIR="$(cd "$(dirname "$(realpath "${BASH_SOURCE[0]}")")" && pwd)"
+
+# Change to the project directory
+cd "$PROJECT_DIR" || { printf "Failed to change directory to %s.\n" "$PROJECT_DIR" >&2; exit 1; }
 
 # Execute scripts using absolute paths based on PROJECT_DIR
 execute_script() {

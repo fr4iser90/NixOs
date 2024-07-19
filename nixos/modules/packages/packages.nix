@@ -22,6 +22,7 @@ in
     setupPackages
   ];
   
+  
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
   # Enable experimental features for nix

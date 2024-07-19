@@ -21,7 +21,7 @@
   enableBluetooth = false;
   enableBackup = false;
   securityHardening = true;
-  defaultShell = "bash";
+  defaultShell = "zsh";
   enableBash = true; 
   enableZsh = true;  
   enableFish = true;  

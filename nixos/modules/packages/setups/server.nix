@@ -34,7 +34,7 @@
     virt-manager
     qemu
     rsnapshot
-    borgbackup              
+    borgbackup          
 ];
 
   virtualisation.docker.enable = true;
