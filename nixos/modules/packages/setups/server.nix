@@ -7,7 +7,7 @@
     git                
     wget              
     tree   
-    konsole
+    kitty
     htop
     tmux
     screen

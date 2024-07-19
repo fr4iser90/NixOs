@@ -1,0 +1,28 @@
+parsers:
+  - crowdsecurity/http-logs
+scenarios:
+  - crowdsecurity/http-crawl-non_statics
+  - crowdsecurity/http-probing
+  - crowdsecurity/http-bad-user-agent
+  - crowdsecurity/http-path-traversal-probing
+  - crowdsecurity/http-sensitive-files
+  - crowdsecurity/http-sqli-probing
+  - crowdsecurity/http-xss-probing
+  - crowdsecurity/http-backdoors-attempts
+  - ltsich/http-w00tw00t
+  - crowdsecurity/http-generic-bf
+  - crowdsecurity/http-open-proxy
+  - crowdsecurity/http-admin-interface-probing
+  - crowdsecurity/http-wordpress-scan
+  - crowdsecurity/http-cve-probing
+collections:
+  - crowdsecurity/http-cve
+contexts:
+  - crowdsecurity/http_base
+description: "http common : scanners detection"
+author: crowdsecurity
+tags:
+  - linux
+  - http
+  - crawl
+  - scan

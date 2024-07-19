@@ -10,7 +10,7 @@
     firefox
     vlc
     fish
-    alacritty            
+    kitty            
     plex
     kodi
     rhythmbox

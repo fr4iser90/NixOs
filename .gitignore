@@ -2,3 +2,7 @@
 secrets/
 hardware-configuration.nix
 nixos/env.nix
+secret.env
+traefik-crowdsec-bouncer.env
+traefik.env
+bw.env

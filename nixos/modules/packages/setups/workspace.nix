@@ -11,7 +11,7 @@
     firefox
     vlc
     fish
-    alacritty
+    kitty
     vscode
     #intellij-idea-community
     #pycharm-community

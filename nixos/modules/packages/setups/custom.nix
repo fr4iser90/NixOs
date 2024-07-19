@@ -24,7 +24,7 @@ in
     # spotify          # Digital music service.
     # kodi             # Open-source home theater software.
     fish               # Friendly interactive shell.
-    alacritty          # GPU-accelerated terminal emulator.
+    kitty              # GPU-accelerated terminal emulator.
     ethtool            # Utility for examining and tuning network interfaces.
     htop               # Interactive process viewer.
     wireguard-tools    # WireGuard command line tools.

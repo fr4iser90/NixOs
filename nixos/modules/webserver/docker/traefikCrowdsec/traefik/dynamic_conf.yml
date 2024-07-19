@@ -49,5 +49,5 @@ http:
               OverwriteXFF: true
     traefikAuth:
       basicAuth:
-        users: ${traefikAuthUsers}
-
+        users:
+          - "${TRAEFIK_AUTH_USER}:${TRAEFIK_AUTH_PASSWORD}"

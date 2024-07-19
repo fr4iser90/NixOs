@@ -1,0 +1,15 @@
+version: "3"
+services:
+  watchtower:
+    container_name: watchtower
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+       WATCHTOWER_SCHEDULE: 15 16 * * *
+    #  - WATCHTOWER_NOTIFICATIONS_LEVEL=info # Classification used for notifications. Possible values are: panic, fatal, error, warn, info, debug, or trace.
+    #  - WATCHTOWER_NOTIFICATIONS=slack
+    #  - WATCHTOWER_NOTIFICATION_SLACK_HOOK_URL="https://chat.fr4iserhome.com/hook/"  # Insert webhook URL
+    #  - WATCHTOWER_NOTIFICATION_SLACK_IDENTIFIER=watchtower-server-01  # Enter your own identifier
+    #  - WATCHTOWER_NOTIFICATION_SLACK_CHANNEL=#watchtower  # Enter the previously created or assigned channel

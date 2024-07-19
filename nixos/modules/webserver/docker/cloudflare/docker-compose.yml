@@ -1,0 +1,16 @@
+version: '2'
+services:
+   cloudflare-ddns:
+      image: oznu/cloudflare-ddns:latest
+      container_name: cf-fr4iserhome
+      restart: always
+      env_file:
+        - ../../secrets.env
+      environment:
+        - API_KEY=${CLOUDFLARE_DNS_API_TOKEN}
+        - ZONE=${DOMAIN}
+        - RRTYPE=A
+        - DELETE_ON_STOP=false
+        - DNS_SERVER=1.1.1.1
+      dns:
+         - 1.1.1.1

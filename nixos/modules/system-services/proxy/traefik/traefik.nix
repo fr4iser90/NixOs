@@ -1,9 +1,11 @@
 { config, pkgs, ... }:
 
 let
-  envDir = ./config;
-  crowdsecConfigDir = ./crowdsec;
-  traefikConfigDir = ./traefik;
+  envDir = ./traefik-crowdsec-stack/config;
+  crowdsecConfigDir = ./traefik-crowdsec-stack/crowdsec/config;
+  traefikConfigDir = ./traefik-crowdsec-stack/traefik;
+  traefikAuthUsersFile = ../../../../secrets/traefik.env;
+  traefikAuthUsers = builtins.readFile traefikAuthUsersFile;
 
   envFile = { path, fileName }:
     pkgs.writeTextFile {
@@ -37,7 +39,7 @@ in
         { source = "/var/run/docker.sock"; target = "/var/run/docker.sock"; readOnly = true; }
         { source = "/var/log/auth.log"; target = "/var/log/auth.log"; readOnly = true; }
         { source = "/var/log/traefik"; target = "/var/log/traefik"; readOnly = true; }
-        { source = "${crowdsecConfigDir}/config"; target = "/etc/crowdsec"; }
+        { source = "${crowdsecConfigDir}"; target = "/etc/crowdsec"; }
         { source = "${crowdsecConfigDir}/data"; target = "/var/lib/crowdsec/data"; }
       ];
       restartPolicy = "unless-stopped";
@@ -48,6 +50,9 @@ in
     traefik = {
       enable = true;
       package = pkgs.traefik;
+      environment = {
+        traefikAuthUsers = traefikAuthUsers;
+      };
       environmentFiles = [ (envFile { path = "${envDir}/traefik.env"; fileName = "traefik.env"; }) ];
       extraConfig = ''
         Hostname = "${SERVICES_TRAEFIK_HOSTNAME:-traefik}"
