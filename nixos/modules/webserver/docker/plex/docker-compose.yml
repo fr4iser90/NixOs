@@ -1,0 +1,34 @@
+version: "2.1"
+services:
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    env_file:
+      - plex.env
+      - ../../secret.env
+    dns:
+      - 1.1.1.1
+    volumes:
+      - /home/media/plex/library:/config
+      - /home/media/plex/tv:/tv
+      - /home/media/cloud/html/data/fr4iser/files/plex:/movies
+    restart: unless-stopped
+    networks:
+      proxy:
+        ipv4_address: 172.40.0.13
+    labels:
+      traefik.docker.network: proxy
+      traefik.enable: "true"
+      traefik.http.routers.plex-secure.entrypoints: websecure
+      traefik.http.routers.plex-secure.middlewares: default@file
+      traefik.http.routers.plex-secure.rule: Host(`plex.${DOMAIN}`)
+      traefik.http.routers.plex-secure.service: plex
+      traefik.http.routers.plex-secure.tls: "true"
+      traefik.http.routers.plex-secure.tls.certresolver: http_resolver
+      traefik.http.routers.plex.entrypoints: web
+      traefik.http.routers.plex.rule: Host(`plex.${DOMAIN}`)
+      traefik.http.services.plex.loadbalancer.server.port: "32400"
+networks:
+  proxy:
+    external: true
+

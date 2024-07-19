@@ -6,3 +6,7 @@ secret.env
 traefik-crowdsec-bouncer.env
 traefik.env
 bw.env
+mysql.env
+pihole.env
+plex.env
+grafana.env
