@@ -10,3 +10,6 @@ mysql.env
 pihole.env
 plex.env
 grafana.env
+wireguardui.env
+wg1123123
+wg0.conf

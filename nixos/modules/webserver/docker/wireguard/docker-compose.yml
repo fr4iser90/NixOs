@@ -1,0 +1,65 @@
+---
+version: "2.1"
+services:
+  wireguard:
+    image: lscr.io/linuxserver/wireguard:latest
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE #optional
+    env_file:
+      - wireguard.env
+      - ../../secret.env
+    volumes:
+      - /home/docker/wireguard/config:/config
+      - /lib/modules:/lib/modules #optional
+    ports:
+      - 51820:51820/udp
+    dns:
+#      - 172.40.0.3
+      - 1.1.1.1
+ #     - 8.8.8.8
+    sysctls:
+       - net.ipv4.conf.all.src_valid_mark=1
+    restart: unless-stopped
+    networks:
+      proxy:
+        ipv4_address: 172.40.0.9
+    labels:
+      traefik.docker.network: proxy
+      traefik.enable: "true"
+      traefik.http.routers.wireguard-secure.entrypoints: websecure
+      traefik.http.routers.wireguard-secure.middlewares: default@file
+      traefik.http.routers.wireguard-secure.rule: Host(`wireguard.${DOMAIN}`)
+      traefik.http.routers.wireguard-secure.service: wireguard
+      traefik.http.routers.wireguard-secure.tls: "true"
+      traefik.http.routers.wireguard-secure.tls.certresolver: http_resolver
+      traefik.http.routers.wireguard.entrypoints: web
+      traefik.http.routers.wireguard.rule: Host(`wireguard.${DOMAIN}`)
+      traefik.http.services.wireguard.loadbalancer.server.port: "5000"
+
+  wireguard-ui:
+    image: ngoduykhanh/wireguard-ui:latest
+    container_name: wireguard-ui
+    depends_on:
+      - wireguard
+    cap_add:
+      - NET_ADMIN
+#    dns:
+#      - 1.1.1.1
+    # use the network of the 'wireguard' service. this enables to show active clients in the status page
+    network_mode: service:wireguard
+    env_file: wireguardui.env
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
+    volumes:
+      - ./db:/app/db
+      - ./config:/etc/wireguard
+
+networks:
+  proxy:
+    external: true
+
+
