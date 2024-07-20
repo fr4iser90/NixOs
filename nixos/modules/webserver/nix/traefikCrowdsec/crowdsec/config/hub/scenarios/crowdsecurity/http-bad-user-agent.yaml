@@ -1,0 +1,26 @@
+type: leaky
+format: 2.0
+#debug: true
+name: crowdsecurity/http-bad-user-agent
+description: "Detect usage of bad User Agent"
+filter: 'evt.Meta.log_type in ["http_access-log", "http_error-log"] && RegexpInFile(evt.Parsed.http_user_agent, "bad_user_agents.regex.txt")'
+data:
+  - source_url: https://hub-data.crowdsec.net/web/bad_user_agents.regex.txt
+    dest_file: bad_user_agents.regex.txt
+    type: regexp
+    strategy: LRU
+    size: 40
+    ttl: 10s
+capacity: 1
+leakspeed: 1m
+groupby: "evt.Meta.source_ip"
+blackhole: 2m
+labels:
+  confidence: 1
+  spoofable: 0
+  classification:
+    - attack.T1595
+  behavior: "http:scan"
+  label: "Bad User Agent"
+  service: http
+  remediation: true

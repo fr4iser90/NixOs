@@ -1,0 +1,19 @@
+#contribution by @ltsich
+type: leaky
+name: crowdsecurity/dovecot-spam
+description: "detect errors on dovecot"
+debug: false
+filter: "evt.Meta.log_type == 'dovecot_logs' && evt.Meta.dovecot_login_result == 'auth_failed'"
+groupby: evt.Meta.source_ip
+capacity: 3
+leakspeed: "360s"
+blackhole: 5m
+labels:
+  confidence: 3
+  spoofable: 0
+  classification:
+    - attack.T1110
+  behavior: "pop3/imap:bruteforce"
+  label: "Dovecot Bruteforce"
+  service: dovecot
+  remediation: true

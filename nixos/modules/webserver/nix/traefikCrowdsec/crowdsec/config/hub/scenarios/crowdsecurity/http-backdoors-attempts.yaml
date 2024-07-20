@@ -1,0 +1,23 @@
+type: leaky
+#debug: true
+name: crowdsecurity/http-backdoors-attempts
+description: "Detect attempt to common backdoors"
+filter: 'evt.Meta.log_type in ["http_access-log", "http_error-log"] and any(File("backdoors.txt"), { evt.Parsed.file_name == #})'
+groupby: "evt.Meta.source_ip"
+distinct: evt.Parsed.file_name
+data:
+  - source_url: https://hub-data.crowdsec.net/web/backdoors.txt
+    dest_file: backdoors.txt
+    type: string
+capacity: 1
+leakspeed: 5s
+blackhole: 5m
+labels:
+  confidence: 3
+  spoofable: 0
+  classification:
+    - attack.T1595
+  behavior: "http:exploit"
+  label: "Scanning for backdoors"
+  service: http
+  remediation: true
