@@ -26,6 +26,7 @@ services:
       - /var/log/auth.log:/var/log/auth.log:ro
       - /var/log/traefik:/var/log/traefik:ro
       - ./crowdsec/config:/etc/crowdsec
+      - ./crowdsec/config/patterns:/etc/crowdsec/patterns
       - ./crowdsec/data:/var/lib/crowdsec/data
   traefik:
     container_name: traefik
@@ -46,13 +47,13 @@ services:
       timeout: 1s
       retries: 3
       start_period: 10s
-    image: traefik::2.10
+    image: traefik:2.10
     labels:
       traefik.docker.network: proxy
       traefik.enable: "true"
       traefik.http.routers.traefik.entrypoints: websecure
       traefik.http.routers.traefik.middlewares: default@file,traefikAuth@file
-      traefik.http.routers.traefik.rule: Host(`traefik.${DOMAIN}`)
+      traefik.http.routers.traefik.rule: Host(`traefik.fr4iserhome.com`)
       traefik.http.routers.traefik.service: api@internal
       traefik.http.routers.traefik.tls: "true"
       traefik.http.routers.traefik.tls.certresolver: http_resolver
