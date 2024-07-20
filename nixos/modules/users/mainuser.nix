@@ -6,7 +6,7 @@ in
 {
   users.users."${env.mainUser}" = {
     isNormalUser = true;
-    extraGroups = [ "tty" "networkmanager" "wheel" "docker" "video" "audio" "render" "input"  ];
+    extraGroups = [ "tty" "networkmanager" "wheel" "docker" "video" "audio" "render" "input" ];
     home = "/home/${env.mainUser}";
     shell = pkgs.${env.defaultShell};
     hashedPasswordFile = "/etc/nixos/secrets/passwords/.hashedLoginPassword";
