@@ -1,0 +1,31 @@
+version: "3.8"
+services:
+  organizr:
+    image: organizr/organizr
+    container_name: organizr
+    env_file: ../../secrets.env
+    volumes:
+      - ./data:/config
+    dns:
+       - 1.1.1.1
+    restart: unless-stopped
+    networks:
+      proxy:  # null
+        ipv4_address: 172.40.0.51
+    labels:
+      traefik.docker.network: proxy
+      traefik.enable: "true"
+      traefik.http.routers.dashorg-secure.entrypoints: websecure
+      traefik.http.routers.dashorg-secure.middlewares: default@file
+      traefik.http.routers.dashorg-secure.rule: Host(`dash.${DOMAIN}`)
+      traefik.http.routers.dashorg-secure.service: dashorg
+      traefik.http.routers.dashorg-secure.tls: "true"
+      traefik.http.routers.dashorg-secure.tls.certresolver: http_resolver
+      traefik.http.routers.dashorg.entrypoints: web
+      traefik.http.routers.dashorg.rule: Host(`dash.${DOMAIN}``)
+      traefik.http.services.dashorg.loadbalancer.server.port: "80"
+
+networks:
+  proxy:
+    external: true
+

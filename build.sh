@@ -38,6 +38,9 @@ execute_script "checkDependencies.sh"
 # Check host for information
 execute_script "collectData.sh"
 
+# Collect email / domain if wanted
+execute_script "collectPersonalData.sh"
+
 # Execute envBuilder.sh and decide predefined or personalized setup
 execute_script "envBuilder.sh"
 

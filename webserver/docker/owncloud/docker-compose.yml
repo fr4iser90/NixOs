@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+
+  mysql:
+    image: mariadb
+    restart: always
+    container_name: owncloud-db
+    networks:
+      proxy:
+        ipv4_address: 172.40.0.7
+    env_file: mysql.env
+  owncloud:
+    container_name: owncloud
+    image: owncloud
+    volumes:
+      - /home/media/cloud/html:/var/www/html
+      - /home/media/cloud/data:/mnt/data
+      - /home/media/cloud/sql:/var/lib/mysql
+    restart: always
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+    networks:
+      proxy:
+        ipv4_address: 172.40.0.6
+    labels:
+      traefik.docker.network: proxy
+      traefik.enable: "true"
+      traefik.http.routers.owncloud-secure.entrypoints: websecure
+      traefik.http.routers.owncloud-secure.middlewares: default@file
+      traefik.http.routers.owncloud-secure.rule: Host(`owncloud.${DOMAIN}`)
+      traefik.http.routers.owncloud-secure.service: owncloud
+      traefik.http.routers.owncloud-secure.tls: "true"
+      traefik.http.routers.owncloud-secure.tls.certresolver: http_resolver
+      traefik.http.routers.owncloud.entrypoints: web
+      traefik.http.routers.owncloud.rule: Host(`owncloud.${DOMAIN}`)
+      traefik.http.services.owncloud.loadbalancer.server.port: "80"
+networks:
+  proxy:
+    external: true
+

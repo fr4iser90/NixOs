@@ -31,4 +31,8 @@
   inputDevices = "libinput";
   networkManager = "networkmanager";
   backupDestination = "/mnt/backup";
+  certEmail = "certemail";
+  domain = "domain";
+  email = "email";
+  webHosting = "true";
 }

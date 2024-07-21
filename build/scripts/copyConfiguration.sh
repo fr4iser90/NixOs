@@ -22,6 +22,11 @@ if ! hostName=$(printf "%s" "$env_file" | grep -oP '(?<=hostName = ").*?(?=")');
     exit 1
 fi
 
+if ! webHosting=$(printf "%s" "$env_file" | grep -oP '(?<=webHosting = ").*?(?=")'); then
+    printf "Failed to extract webHosting from env.nix\n" >&2
+    exit 1
+fi
+
 if [[ -z "$mainUser" || -z "$hostName" ]]; then
     printf "mainUser or hostName is empty\n" >&2
     exit 1
@@ -91,6 +96,14 @@ copy_new_config() {
     fi
 }
 
+copy_webserver_config() {
+    if ! sudo cp -r ./webserver /etc/webserver; then
+        printf "Failed to copy new configuration to /etc/webserver\n" >&2
+        exit 1
+    fi
+}
+
+
 # Run nixos-rebuild switch
 rebuild_nixos() {
     cd /etc/nixos || exit
@@ -104,6 +117,10 @@ main() {
     confirm_deletion
     remove_old_config
     copy_new_config
+    
+    if [ "$webHosting" = "true" ]; then
+    copy_webserver_config
+fi
     rebuild_nixos
 }
 

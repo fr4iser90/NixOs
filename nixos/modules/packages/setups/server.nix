@@ -37,5 +37,6 @@
     borgbackup          
 ];
 
+  services.openvscode-server.enable = true;
   virtualisation.docker.enable = true;
 }

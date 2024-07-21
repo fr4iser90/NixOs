@@ -8,21 +8,15 @@
     git
     wget
     tree
-    firefox
     vlc
     fish
     kitty
     vscode
-    #intellij-idea-community
-    #pycharm-community
-    clion
+    bitwarden-cli
     qtcreator
     geany
-    eclipse
-    monodevelop
+    eclipses.eclipse-sdk
     android-studio
-    sublime-text
-    atom
     kate
     emacs
     vim
@@ -31,32 +25,31 @@
     kubectl
     terraform
     ansible
-    chefdk
     vagrant
-    heroku-cli
+    heroku
     awscli
-    azure-cli
     gdb
     cmake
-    make
     bazel
     maven
     gradle
     nodejs
-    npm
     yarn
+    kitty
     python3
+    jellyfin-media-player      
+    owncloud-client
     ruby
     go
     rustup
     php
     perl
     elixir
-    haskell.compiler.ghc8104
     racket
     julia
     sbcl
     lua
+    plex
     slack
     zoom-us
     mattermost-desktop
@@ -65,7 +58,9 @@
     thunderbird
     remmina
 ];
+
   virtualisation.docker.enable = true;
+  programs.npm.enable = true;
   programs.steam.enable = true;
   programs.firefox.enable = true;
 }

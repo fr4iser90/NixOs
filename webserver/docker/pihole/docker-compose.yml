@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  pihole:
+    image: pihole/pihole:latest
+    container_name: pihole
+    env_file:
+      - pihole.env
+    networks:
+      proxy:
+        ipv4_address: 172.40.0.3
+    volumes:
+      - './etc-pihole/:/etc/pihole/'
+      - './etc-dnsmasq.d/:/etc/dnsmasq.d/'
+    dns:
+      - 1.1.1.1
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "853:853"
+    restart: unless-stopped
+    labels:
+      traefik.docker.network: proxy
+      traefik.enable: "true"
+      traefik.http.routers.pihole-secure.entrypoints: websecure
+      traefik.http.routers.pihole-secure.middlewares: default@file
+      traefik.http.routers.pihole-secure.rule: Host(`pihole.${DOMAIN}`)
+      traefik.http.routers.pihole-secure.service: pihole
+      traefik.http.routers.pihole-secure.tls: "true"
+      traefik.http.routers.pihole-secure.tls.certresolver: http_resolver
+      traefik.http.routers.pihole.entrypoints: web
+      traefik.http.routers.pihole.rule: Host(`pihole.${DOMAIN}`)
+      traefik.http.services.pihole.loadbalancer.server.port: "80"
+
+networks:
+  proxy:
+    external: true
