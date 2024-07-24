@@ -267,6 +267,9 @@ First, run the build script as mentioned in the installation section and then re
 sh
 
 bash ./build.sh
+
+Follow the commands from the script
+After building, check the environment configuration
 sudo reboot
 
 ###  Step 2: Log in and Set Password for guestuser
@@ -285,6 +288,7 @@ sh
 
 su - guestuser
 bash start.sh
+Follow the bashline
 
 ###  Step 4: Configure Security
 
