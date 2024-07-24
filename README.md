@@ -161,6 +161,42 @@ Includes:
 - `android-studio`
 - ...
 
+## Docker Server Setup Tutorial
+
+This tutorial will guide you through setting up a server using Docker, and configuring it for security.
+### Step 1: Run the Build Script and Reboot
+
+First, run the build script as mentioned in the installation section and then reboot your system.
+
+sh
+
+bash ./build.sh
+sudo reboot
+
+###  Step 2: Log in and Set Password for guestuser
+
+After rebooting, log in to your system and set a password for the guestuser (replace guestuser with your Docker user if different).
+
+sh
+
+sudo passwd guestuser
+
+### Step 3: Start Docker Installation Script
+
+Log in as guestuser and run the Docker installation script.
+
+sh
+
+su - guestuser
+bash start.sh
+
+###  Step 4: Configure Security
+
+The script will guide you through setting up a security bouncer, passwords, and usernames. Follow the prompts to complete the setup.
+###  Step 5: Verify Docker Setup
+
+Check that Docker is installed and running correctly.
+
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
