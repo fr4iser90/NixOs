@@ -1,15 +1,12 @@
----
-version: "2.1"
 services:
+
   wireguard:
     image: lscr.io/linuxserver/wireguard:latest
     container_name: wireguard
     cap_add:
       - NET_ADMIN
       - SYS_MODULE #optional
-    env_file:
-      - wireguard.env
-      - ../../secret.env
+    env_file: wireguard.env
     volumes:
       - /home/docker/wireguard/config:/config
       - /lib/modules:/lib/modules #optional
@@ -49,7 +46,7 @@ services:
 #      - 1.1.1.1
     # use the network of the 'wireguard' service. this enables to show active clients in the status page
     network_mode: service:wireguard
-    env_file: wireguardui.env
+    env_file: wireguard.env
     logging:
       driver: json-file
       options:

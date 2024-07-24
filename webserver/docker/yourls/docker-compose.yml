@@ -1,12 +1,8 @@
-version: '3.1'
-
 services:
 
   yourls:
     image: yourls
     restart: always
-    env_file:
-      - ../../secrets.env
     container_name: yoURLs
     networks:
       proxy:
@@ -40,6 +36,7 @@ services:
     volumes:
 #      - ./mysql_yourls_db:/var/lib/mysql
       - ./data:/var/lib/mysql
+
 networks:
   proxy:
     external: true

@@ -1,9 +1,8 @@
-version: "3.8"
 services:
+
   organizr:
     image: organizr/organizr
     container_name: organizr
-    env_file: ../../secrets.env
     volumes:
       - ./data:/config
     dns:

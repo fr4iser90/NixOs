@@ -46,6 +46,7 @@
             home-manager.users = {
               # Define Home Manager configuration for the main user
               "${env.mainUser}" = userModule env.mainUser;
+              "${env.guestUser}" = userModule env.guestUser;
             };
           }
         ];

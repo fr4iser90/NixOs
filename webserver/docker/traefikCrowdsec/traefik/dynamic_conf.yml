@@ -50,4 +50,4 @@ http:
     traefikAuth:
       basicAuth:
         users:
-          - "${TRAEFIK_AUTH_USER}:${TRAEFIK_AUTH_PASSWORD}"
+          - ${TRAEFIKUSER}

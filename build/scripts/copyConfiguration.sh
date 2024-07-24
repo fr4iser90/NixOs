@@ -17,6 +17,10 @@ if ! mainUser=$(printf "%s" "$env_file" | grep -oP '(?<=mainUser = ").*?(?=")');
     exit 1
 fi
 
+if ! guestUser=$(printf "%s" "$env_file" | grep -oP '(?<=guestUser = ").*?(?=")'); then
+    guestUser=""
+fi
+
 if ! hostName=$(printf "%s" "$env_file" | grep -oP '(?<=hostName = ").*?(?=")'); then
     printf "Failed to extract hostName from env.nix\n" >&2
     exit 1
@@ -24,7 +28,6 @@ fi
 
 if ! webHosting=$(printf "%s" "$env_file" | grep -oP '(?<=webHosting = ").*?(?=")'); then
     printf "Failed to extract webHosting from env.nix\n" >&2
-    exit 1
 fi
 
 if [[ -z "$mainUser" || -z "$hostName" ]]; then
@@ -58,6 +61,12 @@ if ! cp ./nixos/modules/homemanager/homeMainUser.nix "./nixos/modules/homemanage
     exit 1
 fi
 printf "Copied homeMainUser.nix to home-%s.nix\n" "$mainUser"
+
+if ! cp ./nixos/modules/homemanager/homeGuestUser.nix "./nixos/modules/homemanager/home-$guestUser.nix"; then
+    printf "Failed to copy homeGuestUser.nix\n" >&2
+    exit 1
+fi
+printf "Copied homeGuestUser.nix to home-%s.nix\n" "$guestUser"
 
 # Prompt the user to confirm proceeding with deletion
 confirm_deletion() {
@@ -97,11 +106,47 @@ copy_new_config() {
 }
 
 copy_webserver_config() {
-    if ! sudo cp -r ./webserver /etc/webserver; then
-        printf "Failed to copy new configuration to /etc/webserver\n" >&2
-        exit 1
+    if [[ -n "$guestUser" ]]; then
+        local target_dir="/home/${guestUser}"
+        local target_certs=(
+            "/home/${guestUser}/docker/traefikCrowdsec/traefik/acme_letsencrypt.json"
+            "/home/${guestUser}/docker/traefikCrowdsec/traefik/tls_letsencrypt.json"
+        )
+
+        # Remove existing target directory
+        if ! sudo rm -rf "${target_dir}"; then
+            printf "Failed to remove existing directory %s\n" "${target_dir}" >&2
+            exit 1
+        fi
+
+        # Copy new configuration files
+        if ! sudo cp -r ./webserver "${target_dir}"; then
+            printf "Failed to copy new configuration to %s\n" "${target_dir}" >&2
+            exit 1
+        fi
+
+        # Set ownership
+        if ! sudo chown -R "${guestUser}:${guestUser}" "${target_dir}"; then
+            printf "Failed to set ownership for %s\n" "${target_dir}" >&2
+            exit 1
+        fi
+
+        # Set permissions
+        if ! sudo chmod -R 755 "${target_dir}"; then
+            printf "Failed to set permissions for %s\n" "${target_dir}" >&2
+            exit 1
+        fi
+
+        # Set permissions for the certificates files
+        for cert in "${target_certs[@]}"; do
+            if ! sudo chmod 600 "${cert}"; then
+                printf "Failed to set permissions for %s\n" "${cert}" >&2
+                exit 1
+            fi
+        done
     fi
 }
+
 
 
 # Run nixos-rebuild switch

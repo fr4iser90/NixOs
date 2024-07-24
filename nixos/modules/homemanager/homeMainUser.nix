@@ -15,9 +15,6 @@ in
   imports = [ shellInitModule ];
 
   home.sessionVariables = {
-    EMAIL = "${env.email}";
-    DOMAIN = "${env.domain}";
-    CERTEMAIL = "${env.certEmail}";
   };
 
   home.packages = with pkgs; [

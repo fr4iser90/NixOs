@@ -30,7 +30,7 @@
   enableKsh = false;  
   enableMksh = false;  
   enableXonsh = false;  
-  defaultBrowser = "brave";
+  defaultBrowser = "firefox";
   audio = "pipewire";
   gpu = "intel";
   inputDevices = "libinput";

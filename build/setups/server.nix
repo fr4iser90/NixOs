@@ -1,7 +1,7 @@
 {
   setup = "server";
   mainUser = "ServerOne";
-  guestUser = "";
+  guestUser = "docker";
   hostName = "ServerOne";
   timeZone = "Europe/Berlin";
   locales = [ "de_DE.UTF-8" ];

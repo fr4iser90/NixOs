@@ -1,17 +1,16 @@
-version: "3.8"
 services:
+
   plex:
     image: lscr.io/linuxserver/plex:latest
     container_name: plex
     env_file:
       - plex.env
-      - ../../secrets.env
     dns:
       - 1.1.1.1
     volumes:
-      - /home/media/plex/library:/config
-      - /home/media/plex/tv:/tv
-      - /home/media/cloud/html/data/fr4iser/files/plex:/movies
+      - ./plex/library:/config
+      - ./plex/tv:/tv
+      - ./plex/movies:/movies
     restart: unless-stopped
     networks:
       proxy:
@@ -28,6 +27,7 @@ services:
       traefik.http.routers.plex.entrypoints: web
       traefik.http.routers.plex.rule: Host(`plex.${DOMAIN}`)
       traefik.http.services.plex.loadbalancer.server.port: "32400"
+
 networks:
   proxy:
     external: true
