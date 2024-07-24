@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BASE_DIR="/home/docker/docker/traefik"
+BASE_DIR="/home/docker/docker/traefikCrowdsec"
 ENV_FILE="traefik.env"
 
 # Check if fzf is installed

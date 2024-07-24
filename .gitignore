@@ -4,16 +4,6 @@ hardware-configuration.nix
 nixos/env.nix
 secret.env
 secrets.env
-traefik-crowdsec-bouncer.env
-traefik.env
-bw.env
-mysql.env
-cloudflare.env
-pihole.env
-plex.env
-grafana.env
-wireguard.env
-wireguardui.env
 wg1123123
 wg0.conf
 .env
