@@ -46,120 +46,216 @@ The `build.sh` script will guide you through a menu where you can select and ins
 
 ## Usage
 
-### Gaming Setup
-File: `/etc/nixos/modules/packages/setup/gaming.nix`
+# Project Setup Instructions
 
-Includes:
+## Gaming Setup
+<details>
+  <summary>Click to expand</summary>
+  
+  File: `/etc/nixos/modules/packages/setup/gaming.nix`
 
-- `lsof`
-- `git`
-- `wget`
-- `tree`
-- `firefox`
-- `vlc`
-- `fish`
-- `alacritty`
-- `lutris`
-- `wine`
-- `winetricks`
-- `wineWowPackages.full`
-- `discord`
-- `bitwarden-cli`
-- `owncloud-client`
-- `plex`
-- `ffmpeg`
+  Includes:
+  - `lsof`
+  - `git`
+  - `wget`
+  - `tree`
+  - `firefox`
+  - `vlc`
+  - `fish`
+  - `alacritty`
+  - `lutris`
+  - `wine`
+  - `winetricks`
+  - `wineWowPackages.full`
+  - `discord`
+  - `bitwarden-cli`
+  - `owncloud-client`
+  - `plex`
+  - `ffmpeg`
+  
+</details>
 
-### Multimedia Setup
-File: `/etc/nixos/modules/packages/setup/multimedia.nix`
+## Multimedia Setup
+<details>
+  <summary>Click to expand</summary>
+  
+  File: `/etc/nixos/modules/packages/setup/multimedia.nix`
 
-Includes:
+  Includes:
+  - `lsof`
+  - `git`
+  - `wget`
+  - `tree`
+  - `firefox`
+  - `vlc`
+  - `fish`
+  - `alacritty`
+  - `plex`
+  - `kodi`
+  - `rhythmbox`
+  - `clementine`
+  - `spotify`
+  
+</details>
 
-- `lsof`
-- `git`
-- `wget`
-- `tree`
-- `firefox`
-- `vlc`
-- `fish`
-- `alacritty`
-- `plex`
-- `kodi`
-- `rhythmbox`
-- `clementine`
-- `spotify`
+## General Server Setup
+<details>
+  <summary>Click to expand</summary>
+  
+  Docker:
+  - `ReverseProxy = traefik`
+  - `security = crowdsec`
+  - `DockerManagement = portainer`
+  - `passwordManager = bitwarden`
+  - `honeypot = tarpit`
+  - `VPN = wireguard`
+  - `URLManagement = YOURLS`
+  - `Cloud = owncloud`
+  - `dashboard = organizr`
+  - `mediaServer = plex`
+  - `adblocker = pihole`
+  - `dockerUpdater = watchtower`
+  
+  File: `/etc/nixos/modules/packages/setup/server.nix`
 
-### General Server Setup
-File: `/etc/nixos/modules/packages/setup/server.nix`
+  Includes:
+  - `lsof`
+  - `git`
+  - `wget`
+  - `tree`
+  - `konsole`
+  - `htop`
+  - `tmux`
+  - `screen`
+  - `nmap`
+  - `ncdu`
+  - `iperf3`
+  - `ethtool`
+  - `openssh`
+  - `fail2ban`
+  - `iptables`
+  - `tcpdump`
+  - `rsync`
+  - `curl`
+  - `nginx`
+  - `mariadb`
+  - `redis`
+  - `memcached`
+  - `php`
+  - `python3`
+  - `nodejs`
+  - `docker`
+  - `podman`
+  - `kubernetes`
+  - `virt-manager`
+  - `qemu`
+  - `rsnapshot`
+  - `borgbackup`
+  
+</details>
 
-Includes:
 
-- `lsof`
-- `git`
-- `wget`
-- `tree`
-- `konsole`
-- `htop`
-- `tmux`
-- `screen`
-- `nmap`
-- `ncdu`
-- `iperf3`
-- `ethtool`
-- `openssh`
-- ...
+## Server Remote Desktop Setup
+<details>
+  <summary>Click to expand</summary>
+  
+  File: `/etc/nixos/modules/packages/setup/serverRemoteDesktop.nix`
 
-### Server Remote Desktop Setup
-File: `/etc/nixos/modules/packages/setup/serverRemoteDesktop.nix`
+  Includes:
+  - `lsof`
+  - `git`
+  - `wget`
+  - `tree`
+  - `konsole`
+  - `htop`
+  - `tmux`
+  - `screen`
+  - `nettools`
+  - `nmap`
+  - `ncdu`
+  - `iperf3`
+  - `ethtool`
+  - `openssh`
+  - `fail2ban`
+  - `iptables`
+  - `tcpdump`
+  - `rsync`
+  - `curl`
+  - `firefox`
+  - `vlc`
+  - `weston`
+  - `x11vnc`
+  - ...
+  
+</details>
 
-Includes:
+## Workspace Setup
+<details>
+  <summary>Click to expand</summary>
+  
+  File: `/etc/nixos/modules/packages/setup/workspace.nix`
 
-- `lsof`
-- `git`
-- `wget`
-- `tree`
-- `konsole`
-- `htop`
-- `tmux`
-- `screen`
-- `nettools`
-- `nmap`
-- `ncdu`
-- `iperf3`
-- `ethtool`
-- `openssh`
-- `fail2ban`
-- `iptables`
-- `tcpdump`
-- `rsync`
-- `curl`
-- `firefox`
-- `vlc`
-- `weston`
-- `x11vnc`
-- ...
+  Includes:
+  - `discord`
+  - `lsof`
+  - `git`
+  - `wget`
+  - `tree`
+  - `firefox`
+  - `vlc`
+  - `fish`
+  - `alacritty`
+  - `vscode`
+  - `clion`
+  - `qtcreator`
+  - `geany`
+  - `eclipse`
+  - `monodevelop`
+  - `android-studio`
+  - `kate`
+  - `emacs`
+  - `vim`
+  - `neovim`
+  - `docker`
+  - `kubectl`
+  - `terraform`
+  - `ansible`
+  - `vagrant`
+  - `heroku`
+  - `awscli`
+  - `gdb`
+  - `cmake`
+  - `bazel`
+  - `maven`
+  - `gradle`
+  - `nodejs`
+  - `yarn`
+  - `kitty`
+  - `python3`
+  - `jellyfin-media-player`
+  - `owncloud-client`
+  - `ruby`
+  - `go`
+  - `rustup`
+  - `php`
+  - `perl`
+  - `elixir`
+  - `racket`
+  - `julia`
+  - `sbcl`
+  - `lua`
+  - `plex`
+  - `slack`
+  - `zoom-us`
+  - `mattermost-desktop`
+  - `telegram-desktop`
+  - `signal-desktop`
+  - `thunderbird`
+  - `remmina`
+  
+</details>
 
-### Workspace Setup
-File: `/etc/nixos/modules/packages/setup/workspace.nix`
 
-Includes:
-
-- `discord`
-- `lsof`
-- `git`
-- `wget`
-- `tree`
-- `firefox`
-- `vlc`
-- `fish`
-- `alacritty`
-- `vscode`
-- `clion`
-- `qtcreator`
-- `geany`
-- `eclipse`
-- `monodevelop`
-- `android-studio`
-- ...
 
 ## Docker Server Setup Tutorial
 
