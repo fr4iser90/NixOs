@@ -307,8 +307,15 @@ If you have any questions or issues, feel free to open an issue on GitHub or con
 
 ## Screenshots/Demo
 
-A screenshot demonstrating the gaming setup module.
+Open Ports on your router:
+for http
+![http](images/http.png)
 
+for https
+![https](images/https.png)
+
+for the honeypot tarpit ( they need to get redirected to port 2222 )
+![tarpit](images/tarpit.png)
 ---
 
 Happy Nixing!
