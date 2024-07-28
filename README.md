@@ -307,15 +307,20 @@ If you have any questions or issues, feel free to open an issue on GitHub or con
 
 ## Screenshots/Demo
 
-Open Ports on your router:
-for http
+### Open Ports on Your Router
+
+**HTTP:**
+
 ![http](images/http.png)
 
-for https
+**HTTPS:**
+
 ![https](images/https.png)
 
-for the honeypot tarpit ( they need to get redirected to port 2222 )
+**Honeypot Tarpit (needs to be redirected to port 2222):**
+
 ![tarpit](images/tarpit.png)
+
 ---
 
-Happy Nixing!
+⭐️ **Happy Nixing!** ⭐️
