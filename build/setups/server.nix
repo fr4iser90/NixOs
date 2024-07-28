@@ -1,10 +1,10 @@
 {
   setup = "server";
-  mainUser = "ServerOne";
+  mainUser = "";
   guestUser = "docker";
-  hostName = "ServerOne";
+  hostName = "";
   timeZone = "Europe/Berlin";
-  locales = [ "de_DE.UTF-8" ];
+  locales = [ "en_US.UTF-8" ];
   keyboardLayout = "de";
   keyboardOptions = "eurosign:e";
   enableSSH = true;

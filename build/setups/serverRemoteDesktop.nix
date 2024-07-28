@@ -1,14 +1,14 @@
 {
   setup = "serverRemoteDesktop";
-  mainUser = "ServerOne";
+  mainUser = "";
   guestUser = "";
-  hostName = "ServerOne";
+  hostName = "";
   desktop = "plasma";
   displayManager = "sddm";
   session = "plasma";
   autoLogin = true;
   timeZone = "Europe/Berlin";
-  locales = [ "de_DE.UTF-8" ];
+  locales = [ "en_US.UTF-8" ];
   keyboardLayout = "de";
   keyboardOptions = "eurosign:e";
   darkMode = true;

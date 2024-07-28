@@ -47,9 +47,6 @@ else
     execute_script "personalizedSetup.sh"
 fi
 
-# Collect email / domain if wanted
-execute_script "collectPersonalData.sh"
-
 # Execute hash password script
 execute_script "hashPassword.sh"
 

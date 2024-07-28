@@ -30,11 +30,13 @@ handle_predefined_setups() {
         printf "No setup selected. Exiting.\n" >&2
         exit 1
     fi
+    if [[ "$selected_setup" == "server" ]]; then 
+        bash ./build/scripts/collectPersonalData.sh
+    fi
     cp "./build/setups/$selected_setup.nix" "./nixos/env.nix"
     printf "Using predefined setup: %s\n" "$selected_setup"
-    # Only load environment variables and skip the builder process if a predefined setup is selected
-    load_env_variables
     printf "Predefined setup selected. Loaded environment variables and skipping builder.\n"
+
 }
 
 # Function to load environment variables from env.nix
@@ -51,7 +53,11 @@ load_env_variables() {
     displayManager=$(printf "%s" "$env_file" | grep -oP '(?<=displayManager = ").*?(?=")')
     session=$(printf "%s" "$env_file" | grep -oP '(?<=session = ").*?(?=")')
     autoLogin=$(printf "%s" "$env_file" | grep -oP '(?<=autoLogin = ).*?(?=;)')
+    domain=$(printf "%s" "$env_file" | grep -oP '(?<=domain = ").*?(?=")')
+    email=$(printf "%s" "$env_file" | grep -oP '(?<=email = ").*?(?=")')
+    certemail=$(printf "%s" "$env_file" | grep -oP '(?<=certemail = ").*?(?=")')
     printf "Loaded variables: mainUser=%s, hostName=%s, desktop=%s, displayManager=%s, session=%s, autoLogin=%s\n" "$mainUser" "$hostName" "$desktop" "$displayManager" "$session" "$autoLogin"
+    printf "Loaded webserver variables: domain=%s, email=%s, certemail=%s\n" "$domain" "$email" "$certemail"
 }
 
 main() {
