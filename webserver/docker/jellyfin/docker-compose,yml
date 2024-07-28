@@ -1,0 +1,38 @@
+services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    env_file: jellyfin.env
+    volumes:
+      - ./jellyfin/library:/config
+      - ./jellyfin/tvseries:/data/tvshows
+      - ./jellyfin/movies:/data/movies
+    ports:
+      - 8096:8096
+      - 8920:8920 #optional
+      - 7359:7359/udp #optional local networrk
+      - 1900:1900/udp #optional
+    restart: always
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+    networks:
+      proxy:
+        ipv4_address: 172.40.0.14
+    labels:
+      traefik.docker.network: proxy
+      traefik.enable: "true"
+      traefik.http.routers.jellyfin-secure.entrypoints: websecure
+      traefik.http.routers.jellyfin-secure.middlewares: default@file
+      traefik.http.routers.jellyfin-secure.rule: Host(`jellyfin.${DOMAIN}`)
+      traefik.http.routers.jellyfin-secure.service: jellyfin
+      traefik.http.routers.jellyfin-secure.tls: "true"
+      traefik.http.routers.jellyfin-secure.tls.certresolver: http_resolver
+      traefik.http.routers.jellyfin.entrypoints: web
+      traefik.http.routers.jellyfin.rule: Host(`jellyfin.${DOMAIN}`)
+      traefik.http.services.jellyfin.loadbalancer.server.port: "8920"
+
+networks:
+  proxy:
+    external: true
+
