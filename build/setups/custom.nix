@@ -1,16 +1,16 @@
 {
   setup = "custom";
-  mainUser = "ServerOne";
+  mainUser = "fr4iser";
   guestUser = "";
-  hostName = "ServerOne";
+  hostName = "nixos";
   desktop = "plasma";
   displayManager = "sddm";
   session = "plasma";
   autoLogin = true;
   timeZone = "Europe/Berlin";
-  locales = [ "de_DE.UTF-8" ];
-  keyboardLayout = "test";
-  keyboardOptions = "test";
+  locales = [ "en_US.UTF-8" ];
+  keyboardLayout = "de";
+  keyboardOptions = "eurosign:e";
   darkMode = true;
   enableSSH = true;
   enableRemoteDesktop = false;
@@ -32,7 +32,7 @@
   enableXonsh = false;  
   defaultBrowser = "firefox";
   audio = "pipewire";
-  gpu = "intel";
+  gpu = "amdgpu";
   inputDevices = "libinput";
   networkManager = "networkmanager";
   backupDestination = "/mnt/backup";

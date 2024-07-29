@@ -1,8 +1,8 @@
 {
   setup = "gaming";
-  mainUser = "";
+  mainUser = "fr4iser";
   guestUser = "";
-  hostName = "";
+  hostName = "nixos";
   desktop = "plasma";
   displayManager = "sddm";
   session = "plasma";
@@ -31,7 +31,7 @@
   enableMksh = false;  
   enableXonsh = false;
   defaultBrowser = "firefox";
-  audio = "pipewire";
+  audio = "pulseaudio";
   gpu = "amdgpu";
   inputDevices = "libinput";
   networkManager = "networkmanager";

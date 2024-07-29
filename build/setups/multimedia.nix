@@ -1,8 +1,8 @@
 {
   setup = "multimedia";
-  mainUser = "";
+  mainUser = "fr4iser";
   guestUser = "";
-  hostName = "";
+  hostName = "nixos";
   desktop = "plasma";
   displayManager = "sddm";
   session = "plasma";

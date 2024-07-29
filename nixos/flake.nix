@@ -41,13 +41,13 @@
           ./configuration.nix               # Main configuration file
           home-manager.nixosModules.home-manager # Home Manager integration
           {
-            home-manager.useGlobalPkgs = true;  # Use global packages for Home Manager
-            home-manager.useUserPackages = true; # Allow user packages for Home Manager
-            home-manager.users = {
-              # Define Home Manager configuration for the main user
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users = lib.recursiveUpdate {
               "${env.mainUser}" = userModule env.mainUser;
+            } (lib.optionalAttrs (env.guestUser != "") {
               "${env.guestUser}" = userModule env.guestUser;
-            };
+            });
           }
         ];
       };

@@ -11,6 +11,9 @@ in
     git                # Version control system.
     wget               # Network downloader.
     tree               # Display directories as trees.
+    discord
+    kitty
+    vscode
     #bitwarden-desktop  # Desktop application for Bitwarden, a password manager.
     bitwarden-cli
     discord            # Voice, video, and text communication application.
@@ -23,16 +26,17 @@ in
     gimp               # GNU Image Manipulation Program.
     # spotify          # Digital music service.
     # kodi             # Open-source home theater software.
-    fish               # Friendly interactive shell.
     kitty              # GPU-accelerated terminal emulator.
     ethtool            # Utility for examining and tuning network interfaces.
     htop               # Interactive process viewer.
-    wireguard-tools    # WireGuard command line tools.
+    firefox
+    lutris
+    wine
+    winetricks
+    wineWowPackages.full
     jellyfin-media-player           
-    brave              # Browser
     owncloud-client    #
   ];
-  services.wg-netmanager.enable = true;
   programs.steam.enable = env.enableSteam;
-  
+  programs.firefox.enable = true;
 }

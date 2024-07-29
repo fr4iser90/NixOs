@@ -1,8 +1,8 @@
 {
   setup = "server";
-  mainUser = "";
+  mainUser = "fr4iser";
   guestUser = "docker";
-  hostName = "";
+  hostName = "nixos";
   timeZone = "Europe/Berlin";
   locales = [ "en_US.UTF-8" ];
   keyboardLayout = "de";

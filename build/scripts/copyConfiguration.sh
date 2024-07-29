@@ -17,9 +17,7 @@ if ! mainUser=$(printf "%s" "$env_file" | grep -oP '(?<=mainUser = ").*?(?=")');
     exit 1
 fi
 
-if ! guestUser=$(printf "%s" "$env_file" | grep -oP '(?<=guestUser = ").*?(?=")'); then
-    guestUser=""
-fi
+guestUser=$(printf "%s" "$env_file" | grep -oP '(?<=guestUser = ").*?(?=")')
 
 if ! hostName=$(printf "%s" "$env_file" | grep -oP '(?<=hostName = ").*?(?=")'); then
     printf "Failed to extract hostName from env.nix\n" >&2
@@ -62,11 +60,14 @@ if ! cp ./nixos/modules/homemanager/homeMainUser.nix "./nixos/modules/homemanage
 fi
 printf "Copied homeMainUser.nix to home-%s.nix\n" "$mainUser"
 
-if ! cp ./nixos/modules/homemanager/homeGuestUser.nix "./nixos/modules/homemanager/home-$guestUser.nix"; then
-    printf "Failed to copy homeGuestUser.nix\n" >&2
-    exit 1
+# Only copy the homeGuestUser.nix if guestUser is set
+if [[ -n "$guestUser" ]]; then
+    if ! cp ./nixos/modules/homemanager/homeGuestUser.nix "./nixos/modules/homemanager/home-$guestUser.nix"; then
+        printf "Failed to copy homeGuestUser.nix\n" >&2
+        exit 1
+    fi
+    printf "Copied homeGuestUser.nix to home-%s.nix\n" "$guestUser"
 fi
-printf "Copied homeGuestUser.nix to home-%s.nix\n" "$guestUser"
 
 # Prompt the user to confirm proceeding with deletion
 confirm_deletion() {
