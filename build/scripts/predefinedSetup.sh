@@ -22,21 +22,29 @@ prompt_with_fzf() {
     printf "%s" "$selected_option"
 }
 
+# Function to update env.nix with selected setup
+update_env_nix() {
+    local selected_setup="$1"
+    local file_path="./nixos/env.nix"
+
+    sed -i "/setup = \".*\";/c\  setup = \"$selected_setup\";" "$file_path"
+    printf "Updated nixos/env.nix with setup: %s\n" "$selected_setup"
+}
+
 # Function to handle predefined setups
 handle_predefined_setups() {
     local predefined_setups selected_setup
     predefined_setups=("custom" "gaming" "workspace" "multimedia" "serverRemoteDesktop" "server" )
-    if ! selected_setup=$(printf "%s\n" "${predefined_setups[@]}" | fzf --prompt "Select a predefined setup: " --height 40% --layout=reverse --border); then
+    if ! selected_setup=$(prompt_with_fzf "Select a predefined setup: " "${predefined_setups[@]}"); then
         printf "No setup selected. Exiting.\n" >&2
         exit 1
     fi
     if [[ "$selected_setup" == "server" ]]; then 
         bash ./build/scripts/collectPersonalData.sh
     fi
-    cp "./build/setups/$selected_setup.nix" "./nixos/env.nix"
+    update_env_nix "$selected_setup"
     printf "Using predefined setup: %s\n" "$selected_setup"
     printf "Predefined setup selected. Loaded environment variables and skipping builder.\n"
-
 }
 
 # Function to load environment variables from env.nix
