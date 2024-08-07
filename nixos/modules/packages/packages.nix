@@ -17,9 +17,10 @@ let
 in
 {
   imports = [
-    ./customPackages.nix 
-    ./modules/shells.nix
-    setupPackages
+    ./customPackages.nix            # import custom packages
+    ./appimage.nix                  # run .appImage files
+    ./modules/shells.nix            # import shell 
+    setupPackages                   # import setupPackages if set
   ];
   
   
