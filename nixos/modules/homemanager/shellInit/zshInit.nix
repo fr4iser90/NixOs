@@ -54,7 +54,9 @@
         alias la='ls -A'
         alias l='ls -CF'
         alias buildNix='bash ~/Documents/nixos/build.sh'
-
+        alias connect='bash ~/.scripts/connect.sh'
+        alias connectDeploy='bash ~/.scripts/connectDeploy.sh'
+        
         # Enable autojump
         if [ -f /usr/share/autojump/autojump.zsh ]; then
           . /usr/share/autojump/autojump.zsh
