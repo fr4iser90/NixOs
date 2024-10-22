@@ -5,5 +5,12 @@
 {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-#  boot.kernelParams = [ "acpi=noirq" "pci=noacpi" ];
+  boot.kernelModules = [ "softdog" ];
+
+  boot.kernelParams = [
+    "kernel.panic=10"          # Restart 10 seconds after a kernel panic
+    "kernel.panic_on_oops=1"   # Restart on 'oops' (serious error)
+    #"acpi=noirq"
+    #"pci=noacpi"
+  ];
 }

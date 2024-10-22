@@ -8,9 +8,15 @@ in
 {
   environment.systemPackages = with pkgs; [
     lsof               # Lists open files.
+    python3
+    docker
+    postman
     git                # Version control system.
     wget               # Network downloader.
     tree               # Display directories as trees.
+    godot_4
+    godot_4-export-templates
+    nodejs_22
     discord
     kitty
     vscode
@@ -34,9 +40,16 @@ in
     wine
     winetricks
     wineWowPackages.full
-    jellyfin-media-player           
+    jellyfin-media-player
     owncloud-client    #
+    qemu_kvm # QEMU mit KVM-Unterstützung
+    libvirt # Libvirt zur Verwaltung von VMs
+    virt-manager # GUI zur Verwaltung von VMs
+    code-cursor
   ];
+
+
   programs.steam.enable = env.enableSteam;
   programs.firefox.enable = true;
+  virtualisation.docker.enable = true;
 }
