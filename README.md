@@ -1,4 +1,6 @@
 # OUTDATED 
+
+###https://github.com/fr4iser90/NixOsControlCenter There is the homelab implemented, but u need to hard copy and start docker , will be implemented soon , docker bashes still the same
 # NixOS Configurations
 
 This project provides a set of preconfigured modules for NixOS, aimed at setting up various environments such as gaming, workspace, server remote desktop, and general server setups. The goal is to simplify and automate the configuration of NixOS systems.
